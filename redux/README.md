@@ -16,12 +16,13 @@
 - MVC：数据放model中，用view来显示，Controller做整体管理。缺点：当系统庞大时，若有一个Action作用在controller，会分发到各个model，系统状态会变得不可预测。（例如下一个订单，用户账户、优惠信息、物流信息等model会变化，view界面也会相应变化。）
 - Flux: 用户会有多种action行为，用一个统一的dispatcher进行分发。一个action分发到若干个store，store保存着数据和页面状态。根据用户的行为和页面状态。store只能向视图层传递信息，而不允许视图层反作用store上
 <br>
-![flux](https://github.com/Adela2012/blog/raw/master/redux/images/flux.png "flux")
+<img src="./images/flux.png"/>
 
 ### Redux概述
 - 当页面渲染完以后，UI出现；用户触发UI上的Action；Action被传送到Reducer方法中去；Reducer会更新Store；state是Store的一部分；组件内容由State来唯一决定
 <br>
-![redux](https://github.com/Adela2012/blog/raw/master/redux/images/redux.png "redux")
+<img src="./images/redux.png"/>
+
 
 ### React的简单回顾
 - 面对对象：方法和属性的组合
@@ -34,7 +35,8 @@
     * 2、组件渲染到一个节点上ReactDOm.render()；
     * 3、其他方法和属性 
 <br>
-[![react]](https://github.com/Adela2012/blog/raw/master/redux/images/react.png "redux")
+<img src="./images/react.png"/>
+
 
 ### React-redux
 - 安装：npm install react-redux redux
@@ -43,7 +45,8 @@
 - react-redux框图
     * user在页面中点击鼠标，view会产生action，action传递到store中去，reducer决定了action和state，state再影响view
 <br>
-[![react-redux]](https://github.com/Adela2012/blog/raw/master/redux/images/react-redux.png "react-redux")
+<img src="./images/react-redux.png"/>
+
 
 ### 项目结构
 - actions
