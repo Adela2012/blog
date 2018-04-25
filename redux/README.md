@@ -14,7 +14,7 @@
 
 ### 单向数据流
 - MVC：数据放model中，用view来显示，Controller做整体管理。缺点：当系统庞大时，若有一个Action作用在controller，会分发到各个model，系统状态会变得不可预测。（例如下一个订单，用户账户、优惠信息、物流信息等model会变化，view界面也会相应变化。）
-- Flux: 用户会有多种action行为，用一个统一的dispatcher进行分发。一个action分发到若干个store，store保存着数据和页面状态。根据用户的行为和页面状态。store只能向视图层传递信息，而不允许视图层反作用store上
+- Flux: 用户会有多种action行为，用一个统一的dispatcher进行分发。一个action分发到若干个store，store保存着数据和页面状态。根据用户的行为和页面状态。store只能向视图层传递信息，而不允许视图层反作用store上
 <br>
 <img src="./images/flux.png" width="600px"/>
 
@@ -66,7 +66,7 @@
 
 #### reducer
 - 响应的抽象
-- 纯方法（纯方法：完全根据输入可以得出输出； 非纯方法：例如项目要依赖当前的时间、系统的状态）
+- 纯方法（纯方法：完全根据输入可以得出输出； 非纯方法：例如项目要依赖当前的时间、系统的状态）
 - 传入旧状态和action
 - 返回新状态
 
@@ -75,7 +75,7 @@
 - reducer根据store响应
 - store是唯一的
 - store包括了完整的state
-- state完全可预测
+- state完全可预测
 
 ### 组件
 |#|container|component|
