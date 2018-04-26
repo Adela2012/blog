@@ -16,12 +16,12 @@
     ```
 - 解决: 使用rem/px进行布局暂时修复
 <br>
->补充： 
->- vw：viewpoint width，视窗宽度，1vw等于视窗宽度的1%。
->- vh：viewpoint height，视窗高度，1vh等于视窗高度的1%。
->- vmin：vw和vh中较小的那个。
->- vmax：vw和vh中较大的那个。
-<br>
->- px：绝对单位，页面按精确像素展示
->- em：相对单位，基准点为自身或父节点字体的大小
->- rem：相对单位，可理解为”root em”, 相对根节点html的字体大小来计算
+#### 补充： 
+- vw：viewpoint width，视窗宽度，1vw等于视窗宽度的1%。
+- vh：viewpoint height，视窗高度，1vh等于视窗高度的1%。
+- vmin：vw和vh中较小的那个。
+- vmax：vw和vh中较大的那个。
+<br
+- px：绝对单位，页面按精确像素展示
+- em：相对单位，基准点为自身或父节点字体的大小
+- rem：相对单位，可理解为”root em”, 相对根节点html的字体大小来计算
