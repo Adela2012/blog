@@ -16,7 +16,8 @@
     ```
 - 解决: 使用rem/px进行布局暂时修复
 <br>
-#### 补充： 
+
+#### 补充 
 - vw：viewpoint width，视窗宽度，1vw等于视窗宽度的1%。
 - vh：viewpoint height，视窗高度，1vh等于视窗高度的1%。
 - vmin：vw和vh中较小的那个。
