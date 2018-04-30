@@ -1,38 +1,36 @@
 var htmlWebpackPlugin = require('html-webpack-plugin');
+var path = require('path');
 
 module.exports = {
-    entry: {
-        main: './src/script/main.js',
-        a: './src/script/a.js',
-        b: './src/script/b.js',
-        c: './src/script/c.js',
-    },
+    context: __dirname,
+    entry: './src/app.js',
     output: {
         path: './dist',
-        filename: 'js/[name]-[chunkhash].js',
-        publicPath: 'http://www.cdn.com/'
+        filename: './js/[name].bundle.js'
+    },
+    module: {
+        loaders: [
+            { 
+                test: /\.js$/, 
+                exclude: path.resolve(__dirname, '/node_modules'), 
+                include: path.resolve(__dirname, '/src'),
+                loader: "babel",
+                query: {
+                    presets: ['env']
+                }
+            },
+            {
+                test: /\.css$/,
+                loader: 'style-loader!css-loader'
+            }
+        ]
     },
     plugins: [
         new htmlWebpackPlugin({
-            filename: 'a.html',
+            filename: 'index.html',
             template: 'index.html',
-            title: 'this is a.html',
-            inject: false,
-            excludeChunks: ['b', 'c']
-        }),
-        new htmlWebpackPlugin({
-            filename: 'b.html',
-            template: 'index.html',
-            title: 'this is b.html',
-            inject: false,
-            chunks: ['main', 'b']
-        }),
-        new htmlWebpackPlugin({
-            filename: 'c.html',
-            template: 'index.html',
-            title: 'this is c.html',
-            inject: false,
-            chunks: ['main', 'c']
+            title: 'webpack good',
+            inject: 'body'
         })
     ]
 }
