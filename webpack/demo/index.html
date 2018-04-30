@@ -1,0 +1,36 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title><%= htmlWebpackPlugin.options.title %></title>
+</head>
+<body>
+    <!-- <%= JSON.stringify(htmlWebpackPlugin) %> -->
+    <!-- <br>
+    <br>
+    <br> -->
+    <h1>htmlWebpackPlugin</h1>
+    <% for (var key in htmlWebpackPlugin) { %>
+        - <%= key %> 
+        <br>
+    <% } %>
+    <br>
+    <br>
+    <br>
+    <h2>files</h2>
+    <% for (var key in htmlWebpackPlugin.files) { %>
+        - <%= key %> : <%= JSON.stringify(htmlWebpackPlugin.files[key]) %>
+        <br>        
+   <% } %>
+    <br>
+    <br>
+    <br>
+    <h2>options</h2>
+    <% for (var key in htmlWebpackPlugin.options) { %>
+        - <%= key %> : <%= JSON.stringify(htmlWebpackPlugin.options[key]) %>
+        <br>
+    <% } %>
+</body>
+</html>
