@@ -25,3 +25,7 @@
 - px：绝对单位，页面按精确像素展示
 - em：相对单位，基准点为自身或父节点字体的大小
 - rem：相对单位，可理解为”root em”, 相对根节点html的字体大小来计算
+
+
+### react 错误提示
+- `Super expression must either be null or a function, not undefined`单词拼写错误，例如`Component`写成了`Components`
