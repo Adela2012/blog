@@ -1,15 +1,14 @@
 .marquee-container {
-  width: 100%;
   overflow: hidden;
+  width: 100%;
 }
 .marquee-box {
-  padding: 0;
-  margin: 0;
   width: 100%;
   height: auto;
-  
+  padding: 0;
+  margin: 0;
   li {
-    margin: 0;
     width: 100%;
+    margin: 0;
   }
 }

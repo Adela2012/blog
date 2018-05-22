@@ -6,7 +6,7 @@ class Marquee extends Component {
         super(props)
         this.state = {
             curTranslateY: 0,
-            height: '',
+            height: 0,
             length: 0,
             curIndex: 0,
             noAnimate: false
@@ -15,20 +15,19 @@ class Marquee extends Component {
     static defaultProps = {
         interval: 2000,
         duration: 300,
-        itemHeight: 30
+        itemHeight: 22
     }
     componentDidMount() {
-        // this.destroy()
-        this.init()
+        this.initData()
         this.start()
     }
 
     destroy () {
         this.timer && clearInterval(this.timer)
     }
-
-    init () {
-        // this.destroy()
+    
+    async initData() {
+        this.destroy()
 
         if(this.cloneNode) {
             this.box.removeChild(this.cloneNode)
@@ -39,11 +38,10 @@ class Marquee extends Component {
         if (!firstItem) {
             return false
         }
-        this.setState({
-            length: this.box.children.length, 
-            height: this.props.itemHeight || firstItem.offsetHeight
+        await this.setState({
+            height: this.props.itemHeight || firstItem.offsetHeight,
+            length: this.box.children.length
         })
-
         this.cloneNode = firstItem.cloneNode(true)
         this.box.appendChild(this.cloneNode)
 
@@ -51,49 +49,58 @@ class Marquee extends Component {
     }
 
     start() {
-        const { height,length,curIndex} = this.state
-        this.timer = setInterval(() =>{
+        this.timer = setInterval(async () => {
+            let { height, length, curIndex } = this.state
             let index = curIndex + 1
-            let y = -curIndex * height
-            this.setState({ curIndex: index, curTranslateY: y})
-            if(curIndex === length) {
+            let y = -index * height
+            await this.setState({ curIndex: index, curTranslateY: y})           
+            if(curIndex === length -1) {
                 setTimeout(() => {
-                    this.go(true)
-                }, this.props.duration)
-            } else if (curIndex === -1) {
-                setTimeout(() => {
-                    this.go(false)
+                    this.go()
                 }, this.props.duration)
             } else {
-                this.setState({ noAnimate: false })             
+                await this.setState({ noAnimate: false })             
             }
         }, this.props.interval + this.props.duration)
     }
 
-    go (toFirst) {
-        // const { curTranslateY, height, length, curIndex, noAnimate } = this.state
-        this.setState({noAnimate: true}) 
-        if(toFirst) {
-            this.setState({ curIndex: 0, curTranslateY: 0 })             
-        } else {
-            let index = this.state.length - 1
-            let y = -this.state.length * this.state.height
-            this.setState({ curIndex: index, curTranslateY: y })             
-        }      
+    async go () {
+        await this.setState({noAnimate: true}) 
+        await this.setState({ curIndex: 0, curTranslateY: 0 })                    
     }
 
     render() {
-        const { children } = this.props
+        const { children, duration} = this.props
+        const { height, curTranslateY, noAnimate} = this.state
         return (
-            <div className="marquee-container">
-                <ul ref={ ul => this.box = ul}>
+            <div className="marquee-container" style={{ height: height + 'px' }}>
+                <ul ref={ ul => this.box = ul} style={{transform: `translate3d(0, ${curTranslateY}px, 0`,transition: `transform ${noAnimate?0:duration}ms`}}>
                     {children}
                 </ul>
             </div>
         )
     }
 }
-class App extends Component{
+class MApp extends Component{
+    constructor(props){
+        super(props)
+        this.state={
+            num:0,
+            color: 'blue'
+        }
+    }
+    componentDidMount(){
+        this.init()
+    }
+    async init() {
+        // this.setState({
+        //     num: this.state.num+1
+        // }, () => {
+        //     console.log('test', this.state.num)
+        // })
+        await this.setState({ num: this.state.num + 1})
+        console.log('test', this.state.num)
+    }
     render() {
         return (
             <Marquee>
@@ -104,4 +111,4 @@ class App extends Component{
         )
     }
 }
-export default App;
+export default MApp;
