@@ -8,6 +8,7 @@ class Home extends Component{
                 <Link to="/tab">tab</Link>
                 <Link to="/test">test</Link>
                 <Link to="/flex">flex</Link>
+                <Link to="/marquee">marquee</Link>
             </div>
         )
     }
