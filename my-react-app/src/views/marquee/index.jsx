@@ -51,9 +51,10 @@ class Marquee extends Component {
     start() {
         this.timer = setInterval(async () => {
             let { height, length, curIndex } = this.state
-            let index = curIndex + 1
-            let y = -index * height
-            await this.setState({ curIndex: index, curTranslateY: y})           
+            await this.setState({ 
+                curIndex: curIndex + 1, 
+                curTranslateY: -(curIndex + 1) * height
+            })           
             if(curIndex === length -1) {
                 setTimeout(() => {
                     this.go()
@@ -82,25 +83,6 @@ class Marquee extends Component {
     }
 }
 class MApp extends Component{
-    constructor(props){
-        super(props)
-        this.state={
-            num:0,
-            color: 'blue'
-        }
-    }
-    componentDidMount(){
-        this.init()
-    }
-    async init() {
-        // this.setState({
-        //     num: this.state.num+1
-        // }, () => {
-        //     console.log('test', this.state.num)
-        // })
-        await this.setState({ num: this.state.num + 1})
-        console.log('test', this.state.num)
-    }
     render() {
         return (
             <Marquee>
