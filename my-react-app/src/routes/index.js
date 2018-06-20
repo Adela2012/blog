@@ -5,6 +5,8 @@ import Tab from '../views/tab'
 import Test from '../views/test'
 import Flex from '../views/flex'
 import Marquee from '../views/marquee'
+import Toast from '../views/toast'
+import PullDown from '../views/pullDown'
 
 const Routes = () => (
     <HashRouter>
@@ -14,6 +16,8 @@ const Routes = () => (
             <Route path="/test" component={Test} />
             <Route path="/flex" component={Flex} />
             <Route path="/marquee" component={Marquee} />
+            <Route path="/toast" component={Toast} />
+            <Route path="/pulldown" component={PullDown} />
         </Switch>
     </HashRouter>
 )

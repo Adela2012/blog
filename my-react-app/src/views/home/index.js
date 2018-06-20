@@ -9,6 +9,8 @@ class Home extends Component{
                 <Link to="/test">test</Link>
                 <Link to="/flex">flex</Link>
                 <Link to="/marquee">marquee</Link>
+                <Link to="/toast">toast</Link>
+                <Link to="/pulldown">pulldown</Link>
             </div>
         )
     }

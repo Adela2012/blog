@@ -29,3 +29,9 @@
 
 ### react 错误提示
 - `Super expression must either be null or a function, not undefined`单词拼写错误，例如`Component`写成了`Components`
+
+
+### 手机自动识别手机的功能关闭
+- iPhone手机浏览器在加载网页的时候，会把疑是手机号或者电话号的一串数字加上一个连接，点了之后会弹出拨打号码的窗口。
+- 将手机自动识别手机的功能关闭：<meta name="format-detection" content="telephone=no" />
+- 如果你还想要识别手机号的功能可以这样：<a href="tel:15*******60">15*******60</a>
