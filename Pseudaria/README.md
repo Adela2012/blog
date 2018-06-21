@@ -35,3 +35,9 @@
 - iPhone手机浏览器在加载网页的时候，会把疑是手机号或者电话号的一串数字加上一个连接，点了之后会弹出拨打号码的窗口。
 - 将手机自动识别手机的功能关闭：<meta name="format-detection" content="telephone=no" />
 - 如果你还想要识别手机号的功能可以这样：<a href="tel:15*******60">15*******60</a>
+
+### 手机兼容性问题：页面空白问题
+- 问题描述：个别苹果6s和6，app中的H5页面点击进去是空白的，但在大部分的手机上，没有问题
+- 拿到白屏页面手机后，将此H5页面在微信以及其他浏览器中打开，均空白，排除APP因素。
+- 采用抓包工具，查看打印台，报错：`SyntaxError: Unexpected token '*'. Expected an opening '(' before a function's parameter list.`
+- 通过报错和排查得知，webpack在打包编译JS代码时，转换成Generator和yield的代码，而问题机型无法解析。
