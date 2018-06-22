@@ -1,8 +1,10 @@
 import React, { Component } from 'react'
-import LoadMore from '../../components/loadmore'
+import LoadMore from '../../components/loadmore/index.js'
+import './style.scss'
 class PullDown extends Component {
-    constructor(){
-        super()
+    constructor(props){
+        document.title="下拉刷新"
+        super(props)
         this.state = {
             data: ['k', 'd9']
         }
@@ -17,13 +19,13 @@ class PullDown extends Component {
     topMethod() {
         setTimeout(() => {
             this.loadmore.onTopLoaded()
-        }, 6000);
+        }, 3000);
     }
     render() {
         return (
             <div className="loadmore-wrapper" style={{ overflow: 'scroll', height: document.documentElement.clientHeight}}>
-                <LoadMore ref={loadmore => this.loadmore = loadmore} topMethod={this.topMethod.bind(this)}>
-                    <ul>
+                <LoadMore ref={loadmore => this.loadmore = loadmore} topMethod={this.topMethod.bind(this)} topIcon={<span>icon</span>}>
+                    <ul className="ul-container">
                         {this.state.data.map((item, key) => {
                             return <li key={key}>{item}</li>
                         })}

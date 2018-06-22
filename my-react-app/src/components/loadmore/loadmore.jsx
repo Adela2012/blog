@@ -25,9 +25,10 @@ class LoadMore extends React.Component {
         topDropText: '释放更新',
         topLoadingText: '加载中...',
         topDistance: 70,
-        topMethod: function () { console.log('topMethod') },
-        translateChange: function (translate) { console.log('translate', translate) },
-        topStatusChange: function (topStatus) { console.log('topStatus', topStatus) },
+        topIcon: '',
+        topMethod: f => f,
+        translateChange: f => f,
+        topStatusChange: f => f,
     }
     componentDidMount() {
         this.init()
@@ -148,6 +149,8 @@ class LoadMore extends React.Component {
                 return this.props.topDropText
             case 'loading':
                 return this.props.topLoadingText
+            default:
+                return 
         }
     }
 
@@ -161,7 +164,7 @@ class LoadMore extends React.Component {
                     <div className={`${prefixCls}-top`}>
                         {
                             topStatus === 'loading' 
-                                ? <span className={`${prefixCls}-spinner`}>icon</span>
+                                ? <span className={`${prefixCls}-spinner`}>{this.props.topIcon}</span>
                                 : ''
                         }
                         <span className={`${prefixCls}-text`}>{this.getTopText(topStatus)}</span>
