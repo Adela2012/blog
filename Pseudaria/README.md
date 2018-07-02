@@ -45,3 +45,6 @@
 ### 下拉加载
 - `mobile.ant.design`的下拉刷新在手机上滑动会有阻塞感，体验不好，如果去除容器`wrapper`的`height`，`scroll`会走`window`滑动顺畅，但是滑动到底部时，向上滑动时会走刷新。
 - 使用过`vue`的`mint-loadmore`，并没有这种问题，所以将代码改写成react，发现上述问题还是存在，最终通过在`touch`事件触发时，判断`window.scrollY`的值来确定是否触发刷新的代码。
+
+### window.location.href无效，页面不跳转
+- 在`react`的`componentDidMount`中使用，判断是否在finance的APP中，如果是，则执行`window.location.href`授权登录，线上发现该行代码不生效，最终使用将之放在`function`中。
