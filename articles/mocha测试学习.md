@@ -15,7 +15,7 @@ $ npm install --save-dev mocha
 </pre>
 
 ## 开始
-创建测试文件<a href='../learn-mocha'>learn-mocha</a>
+创建测试文件<a href='../learn-mocha'>learn-mocha</a>
 <pre>
 $ npm install mocha -g // 全局安装mocha
 $ mkdir test // 创建test文件夹
