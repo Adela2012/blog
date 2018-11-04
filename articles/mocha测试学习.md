@@ -6,24 +6,24 @@ Mocha是一个跑在node和浏览器上的javascript测试框架，让异步测�
 
 ## 安装
 使用npm全局安装
-<pre>
+``` javascript
 $ npm install --global mocha
-</pre>
+```
 作为项目开发依赖安装
-<pre>
+``` javascript
 $ npm install --save-dev mocha
-</pre>
+```
 
 ## 开始
 创建测试文件<a href='../learn-mocha'>learn-mocha</a>
-<pre>
+``` javascript
 $ npm install mocha -g // 全局安装mocha
 $ mkdir test // 创建test文件夹
 $ touch test.js // 创建test文件
-</pre>
+```
 
 ## 例子
-<pre>
+``` javascript
 var assert = require('assert');
 describe('Array', function() {
   describe('#indexOf()', function() {
@@ -32,9 +32,9 @@ describe('Array', function() {
     });
   });
 });
-</pre>
+```
 例子中使用了测试集定义函数`describe()`和测试用例定义函数`it()`，先引入`node`的`assert`模块的`eaual()`方法用来验证两数是否相等：`[1,2,3].indexOf(4)` == `-1`
-<pre>
+``` javascript
 learn-mocha git:(master) ✗ mocha
 
   Array
@@ -42,23 +42,23 @@ learn-mocha git:(master) ✗ mocha
       ✓ should return -1 when the value is not present
 
   1 passing (7ms)
-</pre>
+```
 在终端输入`mocha`，可以看到测试用例通过了。
 
 `Mocha`的执行会找到当前命令执行目录下的`test`目录。`./test/*.js`是`Mocha`寻找的目标。
 也可以在package.json中设置如下设置，就可以使用`npm test`命令行开启`Mocha`测试
-<pre>
+``` javascript
 "scripts": {
   "test": "mocha"
 }
-</pre>
+```
 
 ## 断言ASSERTIONS
 Mocha支持各种断言库来验证功能，例如should.js、chai、expect.js、better-assert、unexpected等
 
 ## 异步模式
 在mocha中测试异步代码并不容易。通过给`it()`加一个回调函数（通常命名为done），mocha将会知道异步代码执行之后需要调用`done`来表示测试完成。
-<pre>
+``` javascript
 describe('User', function() {
   describe('#save()', function() {
     it('should save without error', function(done) {
@@ -70,10 +70,10 @@ describe('User', function() {
     });
   });
 });
-</pre>
+```
 
 当done()可以接受异步代码错误的时候，上面代码还可以简化为
-<pre>
+``` javascript
 describe('User', function() {
   describe('#save()', function() {
     it('should save without error', function(done) {
@@ -82,11 +82,11 @@ describe('User', function() {
     });
   });
 });
-</pre>
+```
 
 ### 使用PROMISES
 除了使用回调函数`done()`， 你还可以返回`Promise`，
-<pre>
+``` javascript
 beforeEach(function() {
   return db.clear()
     .then(function() {
@@ -99,11 +99,11 @@ describe('#find()', function() {
     return db.find({ type: 'User' }).should.eventually.have.length(3);
   });
 });
-</pre>
+```
 
 ### 使用async/await
 如果js环境支持 async/await， 你可以这样写异步测试
-<pre>
+``` javascript
 beforeEach(async function() {
   await db.clear();
   await db.save([tobi, loki, jane]);
@@ -115,12 +115,12 @@ describe('#find()', function() {
     users.should.have.length(3);
   });
 });
-</pre>
+```
 
 
 ## 同步模式
 当测试同步代码时，mocha会自动的执行下一个测试用例
-<pre>
+``` javascript
 describe('Array', function() {
   describe('#indexOf()', function() {
     it('should return -1 when the value is not present', function() {
@@ -129,11 +129,11 @@ describe('Array', function() {
     });
   });
 });
-</pre>
+```
 
 ### 箭头函数
 不建议在mocha中使用箭头函数，因为箭头函数对this的绑定会使测试用例无法访问Mocha上下文中的一些方法。
-<pre>
+``` javascript
 describe('my suite', () => {
   it('my test with arrow function', () => {
     // should set the timeout of this test to 1000 ms; instead will fail
@@ -149,7 +149,7 @@ describe('my suite', function () {
     assert.ok(true);
   });
 });
-</pre>
+```
 
 ## HOOKS
 Mocha提供了四种hooks用来做测试准备和测后清理工作
@@ -157,7 +157,7 @@ Mocha提供了四种hooks用来做测试准备和测后清理工作
 - after() 在所有测试套件运行之后运行
 - beforeEach() 在每个测试用例运行之前运行
 - afterEach() 在每个测试用例运行之后运行
-<pre>
+``` javascript
 var assert = require('assert');
 describe('hooks', function() {
 
@@ -186,9 +186,9 @@ describe('hooks', function() {
   })
 
 });
-</pre>
+```
 
-<pre>
+``` javascript 
 ➜  learn-mocha git:(master) ✗ mocha test/hooks.js
 
   hooks
@@ -202,4 +202,4 @@ runs after each test in this block
 runs after all tests in this block
 
   2 passing (8ms)
-</pre>
+```
