@@ -6,17 +6,17 @@ Mocha是一个跑在node和浏览器上的javascript测试框架，让异步测�
 
 ## 安装
 使用npm全局安装
-``` javascript
+```
 $ npm install --global mocha
 ```
 作为项目开发依赖安装
-``` javascript
+```
 $ npm install --save-dev mocha
 ```
 
 ## 开始
 创建测试文件<a href='../learn-mocha'>learn-mocha</a>
-``` javascript
+``` 
 $ npm install mocha -g // 全局安装mocha
 $ mkdir test // 创建test文件夹
 $ touch test.js // 创建test文件
@@ -34,7 +34,7 @@ describe('Array', function() {
 });
 ```
 例子中使用了测试集定义函数`describe()`和测试用例定义函数`it()`，先引入`node`的`assert`模块的`eaual()`方法用来验证两数是否相等：`[1,2,3].indexOf(4)` == `-1`
-``` javascript
+```
 learn-mocha git:(master) ✗ mocha
 
   Array
@@ -188,7 +188,7 @@ describe('hooks', function() {
 });
 ```
 
-``` javascript 
+``` javascript
 ➜  learn-mocha git:(master) ✗ mocha test/hooks.js
 
   hooks
@@ -203,3 +203,207 @@ runs after all tests in this block
 
   2 passing (8ms)
 ```
+### 描述HOOKS
+任何钩子在回调前都有一个可选的描述，在测试中能更简单定位到错误。如果一个钩子是命名函数，在没有描述时，将会使用函数名。
+```javascript
+beforeEach(function() {
+  // beforeEach hook
+});
+
+beforeEach(function namedFun() {
+  // beforeEach:namedFun
+});
+
+beforeEach('some description', function() {
+  // beforeEach:some description
+});
+```
+
+### 异步HOOKS
+所有hooks(before(), after(), beforeEach(), afterEach()) 都有可能是同步或者异步，就像一个常规的测试。例如，您可能希望在每个测试之前填充虚拟内容的数据库：
+```javascript
+describe('Connection', function() {
+  var db = new Connection,
+    tobi = new User('tobi'),
+    loki = new User('loki'),
+    jane = new User('jane');
+
+  beforeEach(function(done) {
+    db.clear(function(err) {
+      if (err) return done(err);
+      db.save([tobi, loki, jane], done);
+    });
+  });
+
+  describe('#find()', function() {
+    it('respond with matching records', function(done) {
+      db.find({type: 'User'}, function(err, res) {
+        if (err) return done(err);
+        res.should.have.length(3);
+        done();
+      });
+    });
+  });
+});
+```
+
+### 延迟根suite
+如果你需要在所有`suites`运行之前执行异步操作，你可能会延迟根`suite`。用`--delay`运行`mocha`。这将把一个特殊的回调函数，`run()`附加到全局上下文中：
+```javascript
+setTimeout(function() {
+  // do some setup
+
+  describe('my suite', function() {
+    // ...
+  });
+
+  run();
+}, 5000);
+```
+
+## 待定测试(PENDING TESTS)
+待定测试将包括在测试结果中，并且标记为pending。未决测试不被认为是失败的测试。不添加回调函数callback即可。
+```javascript
+  describe('#indexOf()', function() {
+    // pending test below
+    it('should return -1 when the value is not present');
+  });
+});
+```
+```javascript
+learn-mocha git:(master) ✗ mocha test/pending.js
+
+  Array
+    #indexOf()
+      - should return -1 when the value is not present
+
+  0 passing (5ms)
+  1 pending
+```
+`it()`中没有回调函数，就会显示 0 passing 1 pending
+
+
+### 独有测试(EXCLUSIVE TESTS)
+可以通过添加`.only()`到`describe()`和`it()`函数中，来指定测试套件。测试套件和测试用例可以多次定义。如果在测试套件和测试用例同时都加上了`.only()`的时候，测试用例的执行是优先的。例如`suite 2`中，只执行了`test case 5`。
+```javascript
+const assert = require('assert')
+
+describe('suite 1', function () {
+
+  describe('sub suite 1', function () {
+
+    it('test case 1', function () {
+      assert(true)
+    })
+
+    it('test case 2', function () {
+      assert(true)
+    })
+  })
+
+  describe.only('sub suite 2', function () {
+
+    it('test case 3', function () {
+      assert(true)
+    })
+  })
+})
+
+describe.only('suite 2', function () {
+  it('test case 4', function () {
+    assert(true)
+  })
+
+  it.only('test case 5', function () {
+    assert(true)
+  })
+})
+```
+```javascript
+➜  learn-mocha git:(master) ✗ mocha test/exclusive.js
+
+  suite 1
+    sub suite 2
+      ✓ test case 3
+
+  suite 2
+    ✓ test case 5
+
+  2 passing (7ms) (5ms)
+```
+
+## 跳过测试(INCLUSIVE TESTS)
+与 `.only()` 相反，通过给`describe()`和`it()`加上`.skip()`， `mocha` 会忽略这些测试套件或者测试用例。这些被跳过的测试都会被标记为`pending`。
+```javascript
+const assert = require('assert')
+
+describe('suite 1', function () {
+
+  describe('sub suite 1', function () {
+
+    it('test case 1', function () {
+      assert(true)
+    })
+
+    it('test case 2', function () {
+      assert(true)
+    })
+  })
+
+  describe.skip('sub suite 2', function () {
+
+    it('test case 3', function () {
+      assert(true)
+    })
+  })
+})
+
+describe.skip('suite 2', function () {
+  it('test case 4', function () {
+    assert(true)
+  })
+
+  it.skip('test case 5', function () {
+    assert(true)
+  })
+})
+
+let checkTestEnviroment = false
+describe('suite 3', function () {
+  it('test case 6', function () {
+    if (checkTestEnviroment) { 
+      assert(true)
+    } else {
+      this.skip()
+    }
+  })
+
+  it('test case 7', function () {
+    assert(true)
+  })
+})
+```
+从执行结果来看，`test case 3` 和 `suite 2` 和 `test case 6` 套件都进入了 `pending` 待定状态。
+`test case 3`是因为测试用例`it.skip`。`suite 2`是因为测试套件`describe.skip`。`test case 6`是因为使用了`this.skip()`，模拟环境`checkTestEnviroment`有问题，需要跳过测试，最后跳过的测试会被标记为`pending`。
+```javascript
+➜  learn-mocha git:(master) ✗ mocha test/inclusive.js
+
+  suite 1
+    sub suite 1
+      ✓ test case 1
+      ✓ test case 2
+    sub suite 2
+      - test case 3
+
+  suite 2
+    - test case 4
+    - test case 5
+
+  suite 3
+    - test case 6
+    ✓ test case 7
+
+  3 passing (9ms)
+  4 pending
+```
+使用`.skip()`是比注释更好的能够不执行指定测试的方法。

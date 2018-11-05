@@ -1,7 +1,7 @@
 var assert = require('assert');
 describe('hooks', function() {
 
-  before(function() {
+  before('# some description: ', function() {
     console.log('runs before all tests in this block') 
   });
 
@@ -9,7 +9,7 @@ describe('hooks', function() {
     console.log('runs after all tests in this block') 
   });
 
-  beforeEach(function() {
+  beforeEach(function beforeEach () {
     console.log('runs before each test in this block') 
   });
 
