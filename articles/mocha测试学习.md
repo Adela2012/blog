@@ -595,7 +595,7 @@ describe('suite 1', function () {
 ```
 
 ## 使用命令（USAGE）
-```javascript
+```
 ➜  learn-mocha git:(master) ✗ mocha --help
 
   Usage: mocha [debug] [options] [files]
@@ -801,9 +801,10 @@ testCase('Array', function() {
 - `mocha --reporter doc` 输出HTML格式的报告
 - `mocha --reporter markdown` 输出HTML格式的报告
 
-
-
+<br>
+<br>
+<br>
 -----------------
 参照链接：
-- <a href="https://www.jianshu.com/p/3927515bf2df">https://www.jianshu.com/p/3927515bf2df</a> 做测试的DanteYu
 - <a href="https://mochajs.org">https://mochajs.org</a> MOCHA官网
+- <a href="https://www.jianshu.com/p/3927515bf2df">https://www.jianshu.com/p/3927515bf2df</a> 做测试的DanteYu
