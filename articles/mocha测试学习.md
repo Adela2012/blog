@@ -789,17 +789,17 @@ testCase('Array', function() {
 
 ## 报告（REPORTERS）
 `Mocha`提供了多种console端报告模式
-- `mocha --reporter spec` 这是默认模式。是一个按照测试套件和用例分层次的视图
-- `mocha --reporter dot` 显示一个由点组成的矩阵。点的颜色代表着不同的测试结果
-- `mocha --reporter nyan` 显示了一个图。。。。。
-- `mocha --reporter tap` 基于Test Anything Protocol (TAP)
-- `mocha --reporter landing` 模拟飞机降落
-- `mocha --reporter list` 以列表的形式显示每一个测试用例
-- `mocha --reporter progress` 以进度条的形式显示
-- `mocha --reporter json` 输出json格式的报告
-- `mocha --reporter min` 只输出summary。可以与mocha -w一起使用
-- `mocha --reporter doc` 输出HTML格式的报告
-- `mocha --reporter markdown` 输出HTML格式的报告
+- `mocha --reporter spec`          这是默认模式。是一个按照测试套件和用例分层次的视图
+- `mocha --reporter dot`           显示一个由点组成的矩阵。点的颜色代表着不同的测试结果
+- `mocha --reporter nyan`          显示了一个图。。。。。
+- `mocha --reporter tap`           基于Test Anything Protocol (TAP)
+- `mocha --reporter landing`       模拟飞机降落
+- `mocha --reporter list`          以列表的形式显示每一个测试用例
+- `mocha --reporter progress`      以进度条的形式显示
+- `mocha --reporter json`          输出json格式的报告
+- `mocha --reporter min`           只输出summary。可以与mocha -w一起使用
+- `mocha --reporter doc`           输出HTML格式的报告
+- `mocha --reporter markdown`      输出HTML格式的报告
 
 <br>
 <br>
