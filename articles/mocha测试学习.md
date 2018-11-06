@@ -1,6 +1,6 @@
 # 使用mocha测试
 
-学习了官网的示例，将学习成果记录一下。
+学习了<a href="https://mochajs.org">MOCHA官网</a>的示例，将学习成果记录一下。
 ## mocha是什么
 Mocha是一个跑在node和浏览器上的javascript测试框架，让异步测试变得简单有趣， 并提供灵活精确的报告。
 
@@ -800,3 +800,10 @@ testCase('Array', function() {
 - `mocha --reporter min` 只输出summary。可以与mocha -w一起使用
 - `mocha --reporter doc` 输出HTML格式的报告
 - `mocha --reporter markdown` 输出HTML格式的报告
+
+
+
+-----------------
+参照链接：
+- <a href="https://www.jianshu.com/p/3927515bf2df">https://www.jianshu.com/p/3927515bf2df</a> 做测试的DanteYu
+- <a href="https://mochajs.org">https://mochajs.org</a> MOCHA官网
