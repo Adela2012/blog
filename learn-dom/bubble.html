@@ -1,0 +1,46 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta http-equiv="X-UA-Compatible" content="ie=edge">
+  <title>bubbles</title>
+  <style>
+    div {
+      background: #eee;
+      padding: 10px;
+    }
+
+    p {
+      height: 20px;
+      background: red;
+      color: white;
+    }
+  </style>
+</head>
+
+<body>
+  <div>
+    <p>hello</p>
+  </div>
+
+  <script>
+    var div = document.querySelector('div')
+    var p = document.querySelector('p')
+
+    function callback(e) {
+      var tag = e.currentTarget.tagName
+      console.log('Tag: ' + tag)
+    }
+
+    div.addEventListener('click', callback, false) // false 冒泡 true 捕获
+
+    var clicktest = new Event('click')
+    p.dispatchEvent(clicktest) // 该事件默认不冒泡， 控制台里不会有东西输出。写成div.addEventListener('click', callback, false)，那么会在捕获阶段监听到。
+
+    
+  </script>
+</body>
+
+</html>
