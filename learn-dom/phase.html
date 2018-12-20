@@ -1,0 +1,44 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta http-equiv="X-UA-Compatible" content="ie=edge">
+  <title>事件传播</title>
+</head>
+<body>
+  <div>
+    <p>点击</p>
+  </div>
+  <script>
+    var phases = {
+      1: 'capture',
+      2: 'target',
+      3: 'bubble'
+    };
+
+    var div = document.querySelector('div');
+    var p = document.querySelector('p');
+
+    div.addEventListener('click', callback, true);
+    p.addEventListener('click', callback, true);
+    div.addEventListener('click', callback, false);
+    p.addEventListener('click', callback, false);
+
+    function callback(event) {
+      var tag = event.currentTarget.tagName;
+      var phase = phases[event.eventPhase];
+      console.log(event.eventPhase)
+      console.log("Tag: '" + tag + "'. EventPhase: '" + phase + "'");
+    }
+    // 1
+    // Tag: 'DIV'. EventPhase: 'capture'
+    // 2
+    // Tag: 'P'. EventPhase: 'target'
+    // 2
+    // Tag: 'P'. EventPhase: 'target'
+    // 3
+    // Tag: 'DIV'. EventPhase: 'bubble'
+  </script>
+</body>
+</html>
