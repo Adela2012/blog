@@ -33,3 +33,27 @@
 9. 浏览器根据拿到的资源对页面进行渲染，最终把一个完整的页面呈现给了用户。
     - CSS Render 和 DOM Render 最终合成
     - 重排、重绘
+
+
+
+
+
+
+### HTTP get/request
+
+http.request(options[, callback]) 可以从后台发起一个请求，从而获取、更新、同步远程的一些资源。
+
+参数 | 含义
+---|---
+host  | 域名或IP地址
+hostname | host别名
+port | 远端服务器端口，默认80
+localAddress |
+socketPath |
+method | HTTP请求的方法，默认'get'
+path | 路径，默认'/'
+headers | 请求头对象
+auth | 认证头的认证
+agent | 代理行为
+keepAlive | 默认'false'
+keepAliveMsecs |

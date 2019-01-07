@@ -1,5 +1,5 @@
 #### nodejs 本质
-- nodejs 本质上是 JavaScript的执行环境，只是它的分装加了很多web底层的处理。
+- nodejs 本质上是 JavaScript的执行环境，只是它的封装加了很多web底层的处理。
 
 #### commonjs 规范 和 nodejs
 - 模块与包管理工具： 模块的定义、模块的标识、模块的引用。
