@@ -1,3 +1,4 @@
+// import Compile from './compile.js'
 class KVue {
   constructor(options) {
     this.$options = options
@@ -6,11 +7,17 @@ class KVue {
     this.observe(this.$data)
 
     // 模拟一下watcher创建
-    new Watcher()
-    this.$data.test
+    // new Watcher()
+    // this.$data.test
 
-    new Watcher()
-    this.$data.foo.bar
+    // new Watcher()
+    // this.$data.foo.bar
+
+    new Compile(options.el, this)
+
+    if (options.created) {
+      options.created.call(this)
+    }
   }
 
   observe(value) {
@@ -20,6 +27,8 @@ class KVue {
 
     Object.keys(value).forEach(key => {
       this.defineReactive(value, key, value[key])
+      // 代理data中的属性到vue实例上
+      this.proxyData(key)
     })
   }
 
@@ -40,6 +49,17 @@ class KVue {
         val = newVal
         console.log(`${key}属性更新了：${val}`)
         dep.notify()
+      }
+    })
+  }
+
+  proxyData(key) {
+    Object.defineProperty(this, key, {
+      get() {
+        return this.$data[key]
+      },
+      set(newVal) {
+        this.$data[key] = newVal
       }
     })
   }
@@ -66,12 +86,18 @@ class Dep {
 
 // Wathcer  
 class Watcher {
-  constructor() {
+  constructor(vm, key, cb) {
+    this.vm = vm
+    this.key = key
+    this.cb = cb
     // 将当前watcher实例制定到Dep静态属性target
     Dep.target = this
+    this.vm[this.key] // 触发getter, 添加依赖
+    Dep.target = null
   }
 
   update() {
     console.log(`属性更新了`)
+    this.cb.call(this.vm, this.vm[this.key])
   }
 }

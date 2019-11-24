@@ -14,7 +14,9 @@
     <p>{{name}}</p>
     <p k-text="name"></p>
     <p>{{age}}</p>
-    <p> {{doubleAge}} </p> <input type="text" k-model="name"> <button @click="changeName">呵呵</button>
+    <p> {{doubleAge}} </p> 
+    <input type="text" k-model="name"> 
+    <button @click="changeName">click me</button>
     <div k-html="html"></div>
   </div>
   <script src='./compile.js'></script>
@@ -22,7 +24,7 @@
 
   <script>
 
-    let kaikeba = new KVue({
+    let xx = new KVue({
       el: '#app', 
       data: { 
         name: "I am test.", 
@@ -32,12 +34,12 @@
       created() {
         console.log('开始啦')
         setTimeout(() => {
-          this.name = '我是蜗牛'
+          this.name = '我是测试'
 
         }, 1500)
       }, methods: {
         changeName() {
-          this.name = '哈喽，开课吧'
+          this.name = '哈喽，嘻嘻嘻'
           this.age = 1
           this.id = 'xx'
           console.log(1, this)
