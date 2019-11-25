@@ -12,6 +12,7 @@ class Compile {
       this.$fragment = this.node2fragment(this.$el)
       // 执行编译
       this.compile(this.$fragment)
+      console.log(this.$fragment)
       // 将编译完的HTML结果追加至$el
       this.$el.appendChild(this.$fragment)
     }
@@ -21,7 +22,7 @@ class Compile {
     const frag = document.createDocumentFragment()
     // 将el中的所有子元素搬家至frag中
     let child
-    while ((child = el.firstChild)) {
+    while ((child = el.firstChild)) { // 拿出element中的首个元素，赋值给变量child
       frag.appendChild(child)
     }
     return frag
@@ -125,7 +126,7 @@ class Compile {
   isElement(node) {
     return node.nodeType === 1
   }
-
+  // 差值文本
   isInterpolation(node) {
     return node.nodeType === 3 && /\{\{(.*)\}\}/.test(node.textContent)
   }
