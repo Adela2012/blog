@@ -146,5 +146,278 @@ dom.dispatchEvent(eve);
 ```
 
 
+#### HTTP协议
+- HTTP协议的主要特点
+    1. 简单快速（每个资源UrI是固定的）、
+    2. 灵活（每个HTTP协议中有一个头部分，会有数据类型。通过一个HTTP协议就能传输不同数据类型）、
+    3. 无连接（连接一次就会断掉）、
+    4. 无状态（从HTTP上不能区别两次连接的状态）
 
+- HTTP报文的组成部分
+    1. 请求报文：请求行（http方法、页面地址、HTTP协议、版本）、请求头（key、value值，告诉服务端要哪些内容）、空行(告诉服务器下面应该当做请求体来解析)、请求体。
+    2. 响应报文：状态行（HTTP协议及版本、HTTP状态码）、响应头、空行、响应体。
+
+- HTTP方法
+    get获取资源、post传输资源、put更新资源、delete删除资源、head获得报文首部
+
+- POST和GET的区别
+    - `GET在浏览器回退时是无害的，而POST会再次提交请求`
+    - GET产生的URL地址可以被收藏，而POST不可以
+    - `GET请求会被浏览器主动缓存，而POST不可以，除非手动设置`
+    - GET请求只能进行URL编码，而POST支持多种编码方式
+    - `GET请求参数会被完整保留在浏览器历史记录里，而POST中的参数不会被保留`
+    - `GET请求在URL中传送的参数是有长度限制的，而POST没有限制`
+    - 对参数的数据类型，GET只接受ASCII字符，而POST没有限制
+    - GET比POST更不安全，因为参数直接暴露在URL上，所以不能用来传递敏感信息
+    - `GET参数通过URL传递，POST放在Request body中`
+
+- HTTP状态码
+    - 1xx: 指示信息-表示请求已接收，继续处理
+    - 2xx: 成功-表示请求已被成功接收
+    - 3xx: 重定向-要完成请求必须更进一步的额操作
+    - 4xx: 客户端错误-请求语法错误或者请求无法实现
+    - 5xx: 服务器错误-服务器未能实现合法请求
+    ```
+    200 OK: 客户端请求成功
+    206 Partial Content: 客户发送了一个带有Range头的GET请求，服务器完成了它
+    301 Moved Permanently: 所请求的页面已经转移至新的URL 【永久重定向】
+    302 Found: 所请求的页面已经临时转移至新的URL【临时重定向】
+    304 Not Modified: 客户端有缓冲的文档并发出了一个条件性的请求，服务器告诉客户，原来缓存的文档还可以继续使用
+    400 Bad Request: 客户端请求有语法错误，不能被服务器所理解
+    401 Unauthorized: 请求未经授权，这个状态码必须和WWW-Authenticate报头域一起使用
+    403 Forbidden: 对被请求页面的访问被禁止
+    404 Not Found: 请求资源不存在
+    500 Internal Server Error: 服务器发生不可预期的错误原来缓存的文档还可以继续使用
+    503 Server Unavailable: 请求未完成，服务器临时过载或当机，一段时间后可能恢复正常
+    ```
+
+- 持久连接
+    - HTTP协议采用“请求-应答”模式，每个请求/应答客户和服务器都要新建一个连接，完成之后立即断开
+    - 当使用Keep-Alive模式时，客户端到服务端的连接持久有效，当出现对服务器的后继请求时，Keep-Alive功能避免了建立或者重新建立连接，HTTP1.1版本才有
+- 管线化
+    - 在使用持久连接的情况下，某个连接消息的传递类似于：请求1->响应1->请求2->响应2->请求3->响应3
+    - 某个连接上的消息变成了类似这样：请求1->请求2->请求3->响应1->响应2->响应3
+
+    - `管线化机制通过持久连接完成，仅HTTP/1.1支持此技术`
+    - `只有GET和HEAD请求可以进行管线化，而POST则有所限制`
+    - `初次创建连接时不应启动管线机制，因为对方服务器不一定支持HTTP/1.1版本的协议`
+    - 管线化不会影响响应到来的顺序
+    - HTTP/1.1要求服务器端支持管线化，但不要求服务器端也对响应进行管线化处理，只是要求对于管线化的请求不失败即可
+    - 由于上面提到的服务器端问题，开启管线化很可能并不会带来大幅度的性能提升，而且很多服务器和代理程序对于管线化的支持并不好，因此现代浏览器如Chrome和Firefox默认并未开启管线化支持
+    
+
+#### 原型链
+- 创建对象有几种方法
+- 原型、构造函数、实例、原型链
+- instanceof的原理
+- new运算符
+
+##### 创建对象有几种方法
+1、创建对象有几种方法：1、字面量。2、构造函数。3、Object.create
+```javascript
+var o1 = {name: 'o1'}; var o11 = new Object({name: 'o11'});
+var M = function () {this.name = 'o2'}; var o2 = new M();
+var P = {name: 'o3'}; var o3 = Object.create(P); // 创建的对象是用原型链进行连接的
+```
+
+##### 原型、构造函数、实例、原型链
+
+![原型链类](./images/原型链类.png)
+
+##### instanceof的原理
+![instanceof](./images/instanceof.png)
+- 用 constructor 来判断比 instanceof 更加严谨
+```javascript
+o2 instanceof M // true
+o2 instanceof Object // true
+
+o2.__proto__ === M.prototype // true
+M.prototype.__proto__ === Object.prototype // true
+
+o2.__proto__.constructor === M // true
+o2.__proto__.constructor === Object // false
+```
+
+##### new运算符
+1. 一个新对象被创建，它继承自foo.prototype
+2. 构造函数foo被执行，执行的时候，相应的传参会被传入，同时上下文this会被指定为这个新实例。new foo等同于new foo()，只能用在不传递任何参数的情况
+3. 如果构造函数返回了一个“对象”，那么这个对象会取代整个new出来的结果。如果构造函数没有返回对象，那么new出来的结果为步骤1创建的对象
+```javascript
+let new2 = function(func) {
+    let o = Object.create(foo.prototype)
+    let k = func.call(o)
+    if (typeof k === 'object') {
+        return k
+    } else {
+        return o
+    }
+}
+```
+
+
+#### 面向对象
+- 类与实例：类的声明、生成实例
+```javascript
+// 类的声明
+function Animal () {
+  this.name = 'name';
+}
+// es6中的class声明
+class Animal2 {
+  constructor () {
+    this.name = name;
+  }
+}
+// 实例化
+new Animal(), new Animal2()
+```
+
+- 类与继承：如何实现继承、继承的几种方式
+```javascript
+// 借助构造函数实现继承：1、原理。2、缺点：部分继承，在构造函数中的属性能够继承，原型链上的不能继承。
+function parent1 () {
+  this.name = 'parent1'
+}
+function child1 () {
+  parent1.call(this);  // 将父级构造函数this指向子构造函数的实例上，父级中的构造函数子类中也有。
+  this.type = 'child1';
+}
+
+// 借助原型链实现继承：1、原理。2、缺点：例如 实例两个对象时，因为引用同一个对象，原型链中的原型对象两者是共同用的，改变一个时，另一个也会改变。
+function parent2 () {
+  this.name = 'parent2';
+}
+function child2 () {
+  this.type = 'child2';
+}
+child2.prototype = new parent2();
+
+// 组合方式实现继承：通过原型链和构造函数组合的方式，弥补了两者的不足，保留两者的优点。缺点：parent3执行了两次。
+function parent3 () {
+  this.name = 'parent3';
+}
+function child3 () {
+  parent3.call(this);
+  this.type = 'child3';
+}
+child3.prototype = new parent3;
+
+// 组合方式实现继承优化1：1、构造函数体内，通过两个构造函数组合，能拿到所有构造函数的属性方法。想继承父类的原型对象，赋给子类父类的原型对象就行。2、不足：new child4().constructor === parent4
+function parent4 () {
+  this.name = 'parent4';
+}
+function child4 () {
+  parent4.call(this); // 在实例化子类的时候，执行一次父类的实例化
+  this.type = 'child4';
+}
+child4.prototype = parent4.prototype; // 对象上只是一次简单的引用，不会再次执行父类的构造函数
+
+// 组合方式实现继承优化2： 
+function parent5 () {
+  this.name = 'parent5';
+}
+function child5 () {
+  parent5.call(this);  
+  this.type = 'child5';
+}
+child5.prototype = Object.create(parent5.prototype);  //Object.create创建一个中间对象， Object.create创建的原型对象就是参数，父类和子类对象的隔离。
+Child5.prototype.construtor = child5;
+```
+
+#### 通信类
+- 什么是同源策略及限制
+- 前后端如何通信
+- 如何创建Ajax
+- 跨域通信的几种方式
+
+##### 什么是同源策略及限制
+同源限制策略限制`从一个源加载的文档或者脚本如何与来自另一个源的资源进行交互`。这是一个用于`隔离潜在恶意文件`的关键的安全机制。
+- Cookie、LocalStorage和IndexDB无法读取。
+- DOM无法获得。
+- AJAX请求不能发送    
+`协议、域名、端口`构成一个源
+
+##### 前后端如何通信：
+- AJAX (同源)；
+- WebSocket（不受同源的限制）; 
+- CORS（支持同源、支持跨域。CORS允许任何类型的请求，CORS需要浏览器和服务器同时支持，它允许浏览器向跨域服务器发出XMLHttpRequest请求，从而克服了AJAX只能同源使用的限制。）
+
+##### 如何创建Ajax
+XMLHTTPRequest对象的工作流程、兼容性处理、事件的触发条件、事件的触发顺序
+```javascript
+function xml(opt) {
+    var xml = XMLHttpRequest ? new XMLHttpRequest() : new window.ActiveXObject('Microsoft.XMLHTTP')
+    let {type, url, data} = opt
+    type = type.toUpperCase()
+
+    let dataArr = []
+    for(var k in data) {
+        dataArr.push(k + '=' + data[k])
+    }
+
+    if (type === 'GET') {
+        url = url + '?' + dataArr.join('&')
+        xhr.open(type, url, true)
+        xhr.send()
+    }
+    if (type === 'POST') {
+        xhr.open(type, url, true)
+        xhr.setRequestHeader('Content-type', 'application/x-www-form-urleencoded')
+        xhr.send(dataArr.join('&'))
+    }
+
+    xhr.onload = function () {
+        if (xhr.status === 200 || xhr.status === 304) {
+            let res
+            if (opt.success && opt.sucess instanceof Function) {
+                res = xhr.responseText
+                if (typeof res === 'string') {
+                    res = JSON.parse(res)
+                    opt.success.call(xhr, res)
+                }
+            }
+        } else {
+            if (opt.error && opt.error instanceof Function) {
+                opt.error.call(xhr, res)
+            } 
+        }
+    }
+}
+```
+
+
+##### 跨域通信的几种方式
+- JSONP
+- Hash（hash改变，页面不刷新）
+- postMessage（hmtl5中新增加的，用来实现跨域）
+- WebSocket（不受同源限制）
+- CORS（支持跨域通信的AJAX，浏览器会拦截AJAX请求，如果是跨域的，在HTTP头中加一个origin）
+jsonp的实现原理，script标签的异步加载。
+```javascript
+util.jsonp = function(url, onsuccess, onerror, charset) {
+    let callbackName = url.getName('tt_player')
+    window[callbackName] = function () {
+        if (onsuccess && onsuccess instanceof Function) {
+            onsuccess(arguments[0])
+        }
+    }
+    let script = util.createScript(url + '&callback=' + callbackName, charset)
+    script.onload = script.onreadystatechange = function () {
+        if (!script.readyState || /loaded|complete/.test(script.readyState)) {
+            script.onload = script.onreadystatechange = null
+            // 移除该script的DOM对象
+            if(script.parentNode) {
+                script.parentNode.removeChild(script)
+            }
+            // 删除函数或变量
+            window[callbackName] = null
+        }
+    }
+    script.onerror = function () {
+        if (onerror && onerror instanceof Function) {
+            onerror()
+        }
+    }
+}
+```
 
