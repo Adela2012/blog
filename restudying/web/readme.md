@@ -46,7 +46,7 @@
 3. 技术栈准备
 4. 自我介绍
 
-#### 业务分析和实战模拟
+### 业务分析和实战模拟
 
 ```html
 <meta http-equiv="X-UA-Compatible" content="IE=Edge,chrome=1">
@@ -67,13 +67,13 @@
 DNS预解析。为了在加载图片快的时候，第一个优化的点就是DNS预解析
 
 
-#### 简历
+### 简历
 - 姓名-年龄-手机-邮箱-籍贯
 - 学历
 - 工作经历，时间-公司-岗位-职位-技术栈-业绩（给公司做出了什么成绩；攻克了什么难题；哪些地方没有做好，可以准备可以弥补的技术方案）
 - 开源项目，GitHub和说明
 
-#### 自我陈述
+### 自我陈述
 - 把握面试的沟通方向：
     1. 负责了什么项目。这个项目是做什么的，和前端的结合点什么，做的角色是什么，承担了什么责任，做出了什么成绩。
     2. 项目负责人。项目几个人参与、是项目还是技术负责人。做出了怎么样的成绩，项目是怎么分配的，团队间是怎么协作的。技术管理上，怎么解决技术配合和技术难点的。
@@ -92,7 +92,7 @@ DNS预解析。为了在加载图片快的时候，第一个优化的点就是DN
 8. 安全
 9. 算法
 
-#### 页面布局
+### 页面布局
 flex，float， grid，table-cell，position，优缺点、他们之间的比较，height如果不定义，兼容性。
 1. float 浮动，脱离文档流，如果处理不好，会有很多局限性。兼容性比较好。
 2. position 绝对定位，高效。脱离文档流。
@@ -100,7 +100,7 @@ flex，float， grid，table-cell，position，优缺点、他们之间的比较
 4. table-cell 表格布局，兼容性很好。缺点：历史上的诟病，当中间高度超出时，两边也会变高。
 5. grid 网格布局，代码量少，比较新。
 
-#### css盒模型
+### css盒模型
 - 分类：标准模型（content）、IE模型(border)
 - 区别：不同点在于高度和宽度的不同。
 - 设置：使用box-sizing: content-box/border-box
@@ -120,7 +120,7 @@ dom.getBoundingClientRect().width/height // 元素的left/top/width/height
     3. 如何创建BFC：0、overflow：hidden/auto。1、FLOAT不为none。2、position的值不为static和relative。3、display为table/flex/inline-block相关。
 
 
-#### DOM 事件
+### DOM 事件
 
 - 基本概念：DOM事件的级别
 ```javascript
@@ -146,7 +146,8 @@ dom.dispatchEvent(eve);
 ```
 
 
-#### HTTP协议
+### HTTP协议
+
 - HTTP协议的主要特点
     1. 简单快速（每个资源UrI是固定的）、
     2. 灵活（每个HTTP协议中有一个头部分，会有数据类型。通过一个HTTP协议就能传输不同数据类型）、
@@ -206,13 +207,13 @@ dom.dispatchEvent(eve);
     - 由于上面提到的服务器端问题，开启管线化很可能并不会带来大幅度的性能提升，而且很多服务器和代理程序对于管线化的支持并不好，因此现代浏览器如Chrome和Firefox默认并未开启管线化支持
     
 
-#### 原型链
+### 原型链
 - 创建对象有几种方法
 - 原型、构造函数、实例、原型链
 - instanceof的原理
 - new运算符
 
-##### 创建对象有几种方法
+#### 创建对象有几种方法
 1、创建对象有几种方法：1、字面量。2、构造函数。3、Object.create
 ```javascript
 var o1 = {name: 'o1'}; var o11 = new Object({name: 'o11'});
@@ -220,11 +221,11 @@ var M = function () {this.name = 'o2'}; var o2 = new M();
 var P = {name: 'o3'}; var o3 = Object.create(P); // 创建的对象是用原型链进行连接的
 ```
 
-##### 原型、构造函数、实例、原型链
+#### 原型、构造函数、实例、原型链
 
 ![原型链类](./images/原型链类.png)
 
-##### instanceof的原理
+#### instanceof的原理
 ![instanceof](./images/instanceof.png)
 - 用 constructor 来判断比 instanceof 更加严谨
 ```javascript
@@ -238,7 +239,7 @@ o2.__proto__.constructor === M // true
 o2.__proto__.constructor === Object // false
 ```
 
-##### new运算符
+#### new运算符
 1. 一个新对象被创建，它继承自foo.prototype
 2. 构造函数foo被执行，执行的时候，相应的传参会被传入，同时上下文this会被指定为这个新实例。new foo等同于new foo()，只能用在不传递任何参数的情况
 3. 如果构造函数返回了一个“对象”，那么这个对象会取代整个new出来的结果。如果构造函数没有返回对象，那么new出来的结果为步骤1创建的对象
@@ -255,7 +256,7 @@ let new2 = function(func) {
 ```
 
 
-#### 面向对象
+### 面向对象
 - 类与实例：类的声明、生成实例
 ```javascript
 // 类的声明
@@ -324,25 +325,25 @@ child5.prototype = Object.create(parent5.prototype);  //Object.create创建一�
 Child5.prototype.construtor = child5;
 ```
 
-#### 通信类
+### 通信类
 - 什么是同源策略及限制
 - 前后端如何通信
 - 如何创建Ajax
 - 跨域通信的几种方式
 
-##### 什么是同源策略及限制
+#### 什么是同源策略及限制
 同源限制策略限制`从一个源加载的文档或者脚本如何与来自另一个源的资源进行交互`。这是一个用于`隔离潜在恶意文件`的关键的安全机制。
 - Cookie、LocalStorage和IndexDB无法读取。
 - DOM无法获得。
 - AJAX请求不能发送    
 `协议、域名、端口`构成一个源
 
-##### 前后端如何通信：
+#### 前后端如何通信：
 - AJAX (同源)；
 - WebSocket（不受同源的限制）; 
 - CORS（支持同源、支持跨域。CORS允许任何类型的请求，CORS需要浏览器和服务器同时支持，它允许浏览器向跨域服务器发出XMLHttpRequest请求，从而克服了AJAX只能同源使用的限制。）
 
-##### 如何创建Ajax
+#### 如何创建Ajax
 XMLHTTPRequest对象的工作流程、兼容性处理、事件的触发条件、事件的触发顺序
 ```javascript
 function xml(opt) {
@@ -386,14 +387,14 @@ function xml(opt) {
 ```
 
 
-##### 跨域通信的几种方式
+#### 跨域通信的几种方式
 - JSONP
 - Hash（hash改变，页面不刷新）
 - postMessage（hmtl5中新增加的，用来实现跨域）
 - WebSocket（不受同源限制）
 - CORS（支持跨域通信的AJAX，浏览器会拦截AJAX请求，如果是跨域的，在HTTP头中加一个origin）
 
-###### JSONP
+##### JSONP
 jsonp的实现原理，script标签的异步加载。
 ```javascript
 util.jsonp = (url, onsuccess, onerror, charset) => {
@@ -440,7 +441,7 @@ util.createScript = (url, charset) => {
 </script>
 ```
 
-###### Hash
+##### Hash
 利用hash，场景是当前页面A，通过iframe或frame嵌入了跨域的页面B
 ```javascript
 // 在A中伪代码如下
@@ -451,7 +452,7 @@ window.onhashchange = function () {
 }
 ```
 
-###### postMessage
+##### postMessage
 ```javascript
 // 窗口A(http://A.com)向跨域的窗口B(http://B.com)发送信息
 Bwindow.postMessage('data', 'http://B.com') // B窗口下的window
@@ -463,7 +464,7 @@ window.addEventListener('message', function(event) {
 }, false)
 ```
 
-###### WebSocket
+##### WebSocket
 ```javascript
 var ws = new WebSocket('wss://echo.websocket.org') // ws或者wss(加密)，后面指向服务器的地址
 ws.onopen = function (evt) {
@@ -481,7 +482,7 @@ ws.onclose = function (evt) {
 }
 ```
 
-###### CORS
+##### CORS
 参考资料： http://www.ruanyifeng.com/blog/2016/04/cors.html
 ```javascript
 var ws = new WebSocket('wss://echo.websocket.org') // ws或者wss(加密)，后面指向服务器的地址
@@ -490,34 +491,42 @@ fetch('/some/url', {
 }).then(res => {}).catch(err => {})
 ```
 
-#### 安全类
+### 安全类
 - CSRF、XSS
 
-##### CSRF
+#### CSRF
 ![CSRF](./images/CSRF.png)
 攻击原理：用户为网站A的注册用户，通过登录，在浏览器中存储cookie。用户访问B网站，下发页面中有指向网站A漏洞api的链接，引诱用户点击，浏览器自动上传cookie，网站A确认通过，造成CSRF攻击。
-1. 基本概念和缩写：跨站请求伪造（Cross-site request forgery）
+1. 基本概念和缩写：`跨站请求伪造`（Cross-site request forgery）
 2. 攻击原理：接口存在漏洞、确实登陆过。
 3. 防御措施：Token验证、Referer（页面来源）验证、隐藏令牌。
 
-##### XSS
-1. 跨域脚本攻击（cross-size scripting）
+#### XSS
+1. `跨域脚本攻击`（cross-size scripting）
 2. 攻击原理（页面注入脚本，不需要登录）。
 3. 防御措施。
 
+---------------------------------
+
+##### 了解XSS的定义
+##### 理解XSS的原理
+##### 理解XSS的的攻击方式
+- 反射型
+- 存储型
+##### 掌握XSS的防御措施
 
 
-##### 区别
+#### 区别
 XSS： 向页面注入js运行，在js函数体中做攻击。
 CSRF：利用你本身的漏洞，帮你自动执行那些接口，依赖用户登录。
 
-#### 算法类
+### 算法类
 - 1、排序。
 - 2、堆栈、队列、链表。
 - 3、递归。
 - 4、波兰式或逆波兰式。
 
-##### 排序
+#### 排序
 ![排序](./images/排序.png)
 快速、选择、希尔、冒泡
 
@@ -535,14 +544,14 @@ CSRF：利用你本身的漏洞，帮你自动执行那些接口，依赖用户�
 3. 页面性能
 4. 错误监控
 
-#### 1. 渲染机制
+### 1. 渲染机制
 1、什么是DOCTYPE及作用。2、浏览器渲染过程。3、重排Reflow。4、重绘Repaint。5、布局Layout
 
-##### 1、什么是DOCTYPE及作用。
+#### 1、什么是DOCTYPE及作用。
 `DTD`（document type definition，`文档类型定义`）是一系列的语法规则，用来定义XML或者HTML的文件类型。浏览器会使用它来`判断文档类型，决定使用何种协议来解析`，以及切换浏览器模式。
 `DOCTYPE`是用来`声明文档类型和DTD规范`的，一个主要的用途便是文件的合法性验证。如果文件代码不合法，那么浏览器解析时便会出差错。
 
-##### 2、浏览器渲染过程。
+#### 2、浏览器渲染过程。
 ![浏览器渲染过程](./images/浏览器渲染过程.png)
 1. 浏览器渲染页面，涉及html、css、js，影响最后页面的呈现形式。
 2. HTML经过HTML Parser转成DOM Tree，CSS按照css规则和解释器转成CSSOM Tree。这两个树整合Attachement，形成Render Tree，告诉浏览器，渲染树的结构完成。RenderTree 不包含具体内容，也不知道位置是什么。
@@ -552,7 +561,7 @@ CSRF：利用你本身的漏洞，帮你自动执行那些接口，依赖用户�
 ![CSSOMTree](./images/CSSOMTree.png)
 ![Layout](./images/Layout.png)
 
-##### 3、重排Reflow。
+#### 3、重排Reflow。
 - 定义：DOM结构中的各个元素都有自己的盒子（模型），这些都需要浏览器根据这种样式来计算并根据计算结果将元素放到它该出现的位置。这个过程称为reflow。
 - 触发Reflow
 1. 当你增加、删除、修改DOM节点事，会导致Reflow或者Repaint。
@@ -561,12 +570,12 @@ CSRF：利用你本身的漏洞，帮你自动执行那些接口，依赖用户�
 4. 当你Resize窗口的时候（移动端没有这个问题），或者滚动的时候。
 5. 当你修改网页的默认字体的时候。
 
-##### 4、重绘Repaint。
+#### 4、重绘Repaint。
 - 定义：当各种盒子的位置、大小以及其他属性，例如颜色、字体大小等都确定下拉后，浏览器于是把这些元素都按照各自的特性绘制了一遍，于是页面的内容出现了，这个过程称之为repaint。
 - 触发：DOM/CSS改动。
 
 
-#### 2. js运行机制
+### 2. js运行机制
 1. 理解JS的单线程概念；
 2. 理解任务队列；
 3. 理解事件循环Event Loop; 
@@ -578,7 +587,7 @@ CSRF：利用你本身的漏洞，帮你自动执行那些接口，依赖用户�
 2. 当运行栈空了，就去任务队列中读，setTimeout函数内容放在运行栈中，执行。
 3. 运行栈又空了以后，继续去任务队列中读，如此循环，叫事件循环。
 
-#### 3. 页面性能
+### 3. 页面性能
 
 - 提升页面性能的方法有哪些？
 1. 资源压缩合并，减少HTTP请求
@@ -586,7 +595,7 @@ CSRF：利用你本身的漏洞，帮你自动执行那些接口，依赖用户�
 3. 利用浏览器缓存 => 缓存的分类 => 缓存的原理
 4. 使用CDN
 5. 预解析DNS 
-##### 5. 预解析DNS 
+#### 5. 预解析DNS 
 ```html
 <!-- 页面中所有的A标签在浏览器中默认打开DNS预解析，但是如果是https协议，很多游览器是默认关闭的，如果加上第一句话，那么就会全部预解析。 -->
 <!-- 强制打开a标签的DNS解析。 -->
@@ -595,7 +604,7 @@ CSRF：利用你本身的漏洞，帮你自动执行那些接口，依赖用户�
 <link rel=”dns-prefetch” href=”//host_name_to_prefetch.com”>
 ```
 
-##### 2. 异步加载
+#### 2. 异步加载
 
 - 一、异步加载的方式：
 1. 动态脚本加载；
@@ -607,7 +616,7 @@ CSRF：利用你本身的漏洞，帮你自动执行那些接口，依赖用户�
 
 
 
-#####  3. 浏览器缓存
+#### 3. 浏览器缓存
 
 - 1、缓存的分类（http头）
 1. `强缓存`：资源文件在浏览器中存在的备份，放在磁盘上，下次直接读取。
@@ -620,16 +629,16 @@ Etag解决的问题：修改时间变了，强缓存失效，但是内容没有�
 
 
 
-#### 4. 错误监控（如何保证产品的质量）
+### 4. 错误监控（如何保证产品的质量）
 - 前端错误的分类、
 - 错误的捕获方式、
 - 上报错误的基本原理
 
-##### 前端错误的分类：
+#### 前端错误的分类：
 - 及时运行错误：代码错误；
 - 资源加载错误；
 
-##### 错误的捕获方式：
+#### 错误的捕获方式：
 - 及时运行错误：
 1. try…catch;；
 2. window.onerror（不能捕获资源加载错误）
@@ -648,7 +657,7 @@ window.addEventListener('error', function(e) {
 - 客户端：在script标签增加crossorigin属性
 - 服务端：设置js资源响应头Access-Control-Allow-Origin: *
 
-##### 上报错误的基本原理：
+#### 上报错误的基本原理：
 1、采用AJAX通信的方式上报
 2、利用image对象上报
 ```html
