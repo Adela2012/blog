@@ -392,9 +392,11 @@ function xml(opt) {
 - postMessage（hmtl5中新增加的，用来实现跨域）
 - WebSocket（不受同源限制）
 - CORS（支持跨域通信的AJAX，浏览器会拦截AJAX请求，如果是跨域的，在HTTP头中加一个origin）
+
+###### JSONP
 jsonp的实现原理，script标签的异步加载。
 ```javascript
-util.jsonp = function(url, onsuccess, onerror, charset) {
+util.jsonp = (url, onsuccess, onerror, charset) => {
     let callbackName = url.getName('tt_player')
     window[callbackName] = function () {
         if (onsuccess && onsuccess instanceof Function) {
@@ -418,6 +420,271 @@ util.jsonp = function(url, onsuccess, onerror, charset) {
             onerror()
         }
     }
+    document.getElementsByTagName('head')[0].appendChild(script)
+}
+util.createScript = (url, charset) => {
+    let script = document.createElement('script')
+    script.setAttribute('type', 'text/javascript')
+    charset && script.setAttribute('charset', charset)
+    script.setAttribute('src, url)
+    script.async = true
+    return script
 }
 ```
+1. 浏览器用加载script标签的方式，给服务端发请求（回调名jsonp等）。创建一个json全局函数
+2. 服务器返回js块内容（回调名和代码），调用jsonp函数就能运行了。
+```html
+<script src="http://www.abc.com/?data=name&callback=jsonp" charset="utf-8"></script>
+<script>
+    jsonp({data: {}})
+</script>
+```
+
+###### Hash
+利用hash，场景是当前页面A，通过iframe或frame嵌入了跨域的页面B
+```javascript
+// 在A中伪代码如下
+var B = document.getElementByTagName('iframe')
+B.src = B.src + '#' + 'data'
+window.onhashchange = function () {
+    var data = window.location.hash
+}
+```
+
+###### postMessage
+```javascript
+// 窗口A(http://A.com)向跨域的窗口B(http://B.com)发送信息
+Bwindow.postMessage('data', 'http://B.com') // B窗口下的window
+// 在窗口B中监听
+window.addEventListener('message', function(event) {
+    console.log(event.origin) // http://A.com
+    console.log(event.source) // Awinodw
+    console.log(event.data) // data!
+}, false)
+```
+
+###### WebSocket
+```javascript
+var ws = new WebSocket('wss://echo.websocket.org') // ws或者wss(加密)，后面指向服务器的地址
+ws.onopen = function (evt) {
+    console.log('Connection open...')
+    ws.send('Hello WebSocket!')
+}
+
+ws.onmessage = function (evt) {
+    console.log('Received Message: ' + evt.data)
+    wx.close()
+}
+
+ws.onclose = function (evt) {
+    console.log('Connection closed')
+}
+```
+
+###### CORS
+参考资料： http://www.ruanyifeng.com/blog/2016/04/cors.html
+```javascript
+var ws = new WebSocket('wss://echo.websocket.org') // ws或者wss(加密)，后面指向服务器的地址
+fetch('/some/url', {
+    method: 'get'
+}).then(res => {}).catch(err => {})
+```
+
+#### 安全类
+- CSRF、XSS
+
+##### CSRF
+![CSRF](./images/CSRF.png)
+攻击原理：用户为网站A的注册用户，通过登录，在浏览器中存储cookie。用户访问B网站，下发页面中有指向网站A漏洞api的链接，引诱用户点击，浏览器自动上传cookie，网站A确认通过，造成CSRF攻击。
+1. 基本概念和缩写：跨站请求伪造（Cross-site request forgery）
+2. 攻击原理：接口存在漏洞、确实登陆过。
+3. 防御措施：Token验证、Referer（页面来源）验证、隐藏令牌。
+
+##### XSS
+1. 跨域脚本攻击（cross-size scripting）
+2. 攻击原理（页面注入脚本，不需要登录）。
+3. 防御措施。
+
+
+
+##### 区别
+XSS： 向页面注入js运行，在js函数体中做攻击。
+CSRF：利用你本身的漏洞，帮你自动执行那些接口，依赖用户登录。
+
+#### 算法类
+- 1、排序。
+- 2、堆栈、队列、链表。
+- 3、递归。
+- 4、波兰式或逆波兰式。
+
+##### 排序
+![排序](./images/排序.png)
+快速、选择、希尔、冒泡
+
+
+## 二面三面
+- 知识面要广
+- 理解要深刻
+- 内心要诚实
+- 态度要谦虚
+- 回答要灵活
+- 要学会赞美
+
+1. 渲染机制
+2. js运行机制
+3. 页面性能
+4. 错误监控
+
+#### 1. 渲染机制
+1、什么是DOCTYPE及作用。2、浏览器渲染过程。3、重排Reflow。4、重绘Repaint。5、布局Layout
+
+##### 1、什么是DOCTYPE及作用。
+`DTD`（document type definition，`文档类型定义`）是一系列的语法规则，用来定义XML或者HTML的文件类型。浏览器会使用它来`判断文档类型，决定使用何种协议来解析`，以及切换浏览器模式。
+`DOCTYPE`是用来`声明文档类型和DTD规范`的，一个主要的用途便是文件的合法性验证。如果文件代码不合法，那么浏览器解析时便会出差错。
+
+##### 2、浏览器渲染过程。
+![浏览器渲染过程](./images/浏览器渲染过程.png)
+1. 浏览器渲染页面，涉及html、css、js，影响最后页面的呈现形式。
+2. HTML经过HTML Parser转成DOM Tree，CSS按照css规则和解释器转成CSSOM Tree。这两个树整合Attachement，形成Render Tree，告诉浏览器，渲染树的结构完成。RenderTree 不包含具体内容，也不知道位置是什么。
+3. 通过layout，精确计算要显示的DOM，具体宽高颜色等，在RenderTree中呈现出来。
+4. 最后开始Painting，并display。
+![DOMTree](./images/DOMTree.png)
+![CSSOMTree](./images/CSSOMTree.png)
+![Layout](./images/Layout.png)
+
+##### 3、重排Reflow。
+- 定义：DOM结构中的各个元素都有自己的盒子（模型），这些都需要浏览器根据这种样式来计算并根据计算结果将元素放到它该出现的位置。这个过程称为reflow。
+- 触发Reflow
+1. 当你增加、删除、修改DOM节点事，会导致Reflow或者Repaint。
+2. 当你移动DOM的位置，或者搞个动画的时候。
+3. 当你修改CSS样式的时候。
+4. 当你Resize窗口的时候（移动端没有这个问题），或者滚动的时候。
+5. 当你修改网页的默认字体的时候。
+
+##### 4、重绘Repaint。
+- 定义：当各种盒子的位置、大小以及其他属性，例如颜色、字体大小等都确定下拉后，浏览器于是把这些元素都按照各自的特性绘制了一遍，于是页面的内容出现了，这个过程称之为repaint。
+- 触发：DOM/CSS改动。
+
+
+#### 2. js运行机制
+1. 理解JS的单线程概念；
+2. 理解任务队列；
+3. 理解事件循环Event Loop; 
+4. 理解哪些语句会放入异步任务队列；
+5. 理解语句放入异步任务队列的时机
+异步任务： setTimeout 和 setInterval、DOM事件、ES6中的Promise
+![eventLoop](./images/eventLoop.png)
+1. 运行栈运行同步任务，浏览器遇到异步任务例如setTimeout时，浏览器把异步任务拿走，先留着，setTimeout设置的时间到了以后，放在任务队列中。
+2. 当运行栈空了，就去任务队列中读，setTimeout函数内容放在运行栈中，执行。
+3. 运行栈又空了以后，继续去任务队列中读，如此循环，叫事件循环。
+
+#### 3. 页面性能
+
+- 提升页面性能的方法有哪些？
+1. 资源压缩合并，减少HTTP请求
+2. 非核心代码异步加载 => 异步加载的方式 => 异步加载的区别
+3. 利用浏览器缓存 => 缓存的分类 => 缓存的原理
+4. 使用CDN
+5. 预解析DNS 
+##### 5. 预解析DNS 
+```html
+<!-- 页面中所有的A标签在浏览器中默认打开DNS预解析，但是如果是https协议，很多游览器是默认关闭的，如果加上第一句话，那么就会全部预解析。 -->
+<!-- 强制打开a标签的DNS解析。 -->
+<meta http-equiv=”x-dns-prefetch-control” content=”on”>
+<!-- DNS 预解析 -->
+<link rel=”dns-prefetch” href=”//host_name_to_prefetch.com”>
+```
+
+##### 2. 异步加载
+
+- 一、异步加载的方式：
+1. 动态脚本加载；
+2. defer；
+3. async；
+- 二、异步加载的区别：
+1. defer是在HTML解析完之后才会执行，如果多个，按照加载的顺序执行。
+2. async是在加载完之后立即执行，如果是多个，执行顺序和加载顺序无关。
+
+
+
+#####  3. 浏览器缓存
+
+- 1、缓存的分类（http头）
+1. `强缓存`：资源文件在浏览器中存在的备份，放在磁盘上，下次直接读取。
+	- `Expires`（一般是服务器时间，绝对时间） Expires:Thu,21 Jan 2017 23:39:02 GMT
+	- `Cache-Control`（相对时间） (Cache-Control: max-age=3600)3600秒
+2. `协商缓存`：浏览器发现本地有副本，但不知道有没有过期，需要询问浏览器。
+	- `Last-Modified`(服务器下发的) `If-Modified-Since`（浏览器自带的） Last-Modified: Wed,26 Jan 2017 00:35:11 GMT 
+    - `Etag`（传递是哈希值，服务器下发时，） `If-None-Match`
+Etag解决的问题：修改时间变了，强缓存失效，但是内容没有变化，完全可以从副本拿。
+
+
+
+#### 4. 错误监控（如何保证产品的质量）
+- 前端错误的分类、
+- 错误的捕获方式、
+- 上报错误的基本原理
+
+##### 前端错误的分类：
+- 及时运行错误：代码错误；
+- 资源加载错误；
+
+##### 错误的捕获方式：
+- 及时运行错误：
+1. try…catch;；
+2. window.onerror（不能捕获资源加载错误）
+
+- 资源加载错误：
+1. object.onerror；
+2. performance.getEntries()；返回成功加载的资源组成的数组
+3. Error事件捕获 
+```javascript
+window.addEventListener('error', function(e) {
+    console.log('捕获', e)
+}, true)
+```
+4. 延伸：跨域的js运行错误可以捕获吗，错误提示什么，应该怎么处理？
+可以捕获。有错误信息：Script error，但是没有出错行号和出错列号。
+- 客户端：在script标签增加crossorigin属性
+- 服务端：设置js资源响应头Access-Control-Allow-Origin: *
+
+##### 上报错误的基本原理：
+1、采用AJAX通信的方式上报
+2、利用image对象上报
+```html
+<script>
+    // 发送一个请求，资源向上报
+	(new Image()).src=”http://baidu.com/test.js?t=sjdkf”
+</script>
+```
+
+## 三面
+- 准备要充分
+- 描述要演练
+- 引导找时机
+- 优势要发挥
+- 回答要灵活
+
+1. 业务能力
+2. 团队协作能力
+3. 事务推动能力
+4. 带人能力
+5. 其他能力
+
+1. 我做过什么业务（一两句话描述）
+2. 负责的业务有什么业绩（量化：用户量增加、性能提升多少、收入增加多少）
+3. 使用了什么技术方案（技术栈）
+4. 突破了什么技术难点
+5. 遇到了什么问题
+6. 最大的收获是什么
+
+## 终面
+1. 乐观积极
+2. 主动沟通
+3. 逻辑顺畅
+4. 上进有责任心
+5. 有主张，做事果断
+
+1. 职业竞争力
+2. 职业规划
 
