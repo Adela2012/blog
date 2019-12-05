@@ -22,10 +22,103 @@
   -  语法： import export （注意有无 default)
   -  环境： babel 编译 ES6 语法，模块化可用 webpack 和 rollup
   -  扩展： 说一下自己对模块化标准统一的期待
- Class 和普通构造函数有何区别
+2. Class 和普通构造函数有何区别
   -  JS 构造函数
   -  Class 基本语法
   -  语法糖
   -  继承
- Promise 的基本使用和原理
- 总结一下 ES6 其他常用功能
+3. Promise 的基本使用和原理
+  -  new Promise 实例，而且要 return
+  -  new Promise 时要传入函数，函数有 resolve reject 两个参数 
+  -  成功时执行 resolve() 失败时执行 reject()
+  -  then 监听结果
+4. 总结一下 ES6 其他常用功能
+  -  let/const
+  -  多行字符串/模板变量
+  -  解构赋值
+  -  块级作用域
+  -  函数默认参数
+  -  箭头函数
+
+## 原型
+1. 说一个原型的实际应用
+
+  - jquery如何使用原型
+```javascript
+(function(window) {
+  var zepto = {}
+
+  function Z(dom, selector) {
+    var i, len = dom ? dom.length : 0
+    for (i = 0; i < len; i++) {
+      this[i] = dom[i] // 赋值到new Z实例的属性中
+    }
+    this.length = len
+    this.selector = selector || ''
+  }
+
+  zepto.Z = function (dom, selector) {
+    return new Z(dom, selector)
+  }
+
+  zepto.init = function(selector) {
+    var slice = Array.prototype.slice
+    var dom = slice.call(document.querySelectorAll(selector))
+    return zepto.Z(dom, selector)
+  }
+
+  var $ = function(selector) {
+    return zepto.init(selector)
+  } 
+  window.$ = $
+
+  $.fn = {
+    css: function () {console.log('css')},
+    html: function () {console.log('html')},
+  }
+
+  Z.prototype = $.fn
+}
+)(window)
+```
+  - zepto如何使用原型
+```javascript
+(function(window){
+  var jQuery = function (selector) {
+    return new jQuery.fn.init(selector)
+  }
+
+  jQuery.fn = {
+    css: function(){console.log('css')},
+    html: function(){console.log('html')},
+  }
+
+  var init = jQuery.fn.init = function (selector) {
+    var slice = Array.prototype.slice
+    var dom = slice.call(document.querySelectorAll(selector))
+
+    var i, len = dom?dom.length : 0
+    for (i = 0; i < len; i++) {
+      this[i] = dom[i]
+    }
+    this.length = len
+    this.selector = selector || ''
+  }
+
+  init.prototype = jQuery.fn
+
+  window.$ = jQuery
+})(window)
+```
+  - 入口函数、构造函数、构造函数原型
+2. 原型如何体现它的扩展性
+```javascript
+// 扩展插件
+$.fn.getNodeName = function(){
+  return this[0].nodeName
+}
+```
+好处：
+  -  只有 $ 会暴露在 window 全局变量
+  -  将插件扩展统一到 $.fn.xxx 这一个接口，方便使用
+
