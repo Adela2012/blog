@@ -122,3 +122,87 @@ $.fn.getNodeName = function(){
   -  只有 $ 会暴露在 window 全局变量
   -  将插件扩展统一到 $.fn.xxx 这一个接口，方便使用
 
+
+## 异步
+1.  什么是单线程，和异步有什么关系
+  -  单线程 - 只有一个线程，只能做一件事，两段 JS 不能同时执行
+  -  原因 - 避免 DOM 渲染的冲突
+  ```
+  浏览器需要渲染 DOM
+  JS 可以修改 DOM 结构
+  JS 执行的时候，浏览器 DOM 渲染会暂停
+  两段 JS 也不能同时执行（都修改 DOM 就冲突了）
+  webworker 支持多线程，但是不能访问 DOM
+  ```
+  -  解决方案 - 异步
+  -  实现方式 - event loop
+2.  什么是 event-loop
+  -  事件轮询，JS 实现异步的具体解决方案
+  -  同步代码，直接执行
+  -  异步函数先放在 异步队列 中
+  -  待同步函数执行完毕，轮询执行 异步队列 的函数
+3.  是否用过 jquery 的 Deferred
+4.  Promise 的基本使用和原理
+  - 基本语法
+  ```javascript
+  function loadImg(src) {
+    const promise = new Promise(function(resolve, reject){
+      var img = document.createElement('img')
+      img.onload = function(){
+        resolvee(img)
+      }
+      img.onerror = function(){
+        reject(img)
+      }
+      img.src = src
+    })
+    return promise
+  }
+  loadImg(src)
+  .then(
+    img => console.log(img.width), 
+    err=> console.log('fail'))
+  .then(img => console.log(img.height))
+  ```
+  - 异常捕获 - Error 和 reject 都要考虑
+  - 多个串联 - 链式执行的好处
+  - Promise.all 和 Promise.race
+  ```javascript
+  // 全部完成之后，统一执行success
+  Promise.all([result1, result2]).then(datas => {
+    datas[0], datas[1]
+  })
+  // 只要一个完成，就执行success
+  Promise.race([result1, result2]).then(data => {
+    data
+  })
+  ```
+  - Promise 标准 - 状态变化，then 函数
+    - 三种状态： pending fulfilled rejected。
+    - 初始状态是pending。
+    - pending 变成 fulfilled, 或者 pending 变成 rejected。
+    - 状态变化不可逆。
+
+    - Promise 实例必须实现 then 方法
+    - then() 可以接收两个函数作为参数
+    - then() 返回的必须是一个Promise实例
+5.  介绍一下 async/await（和 Promise 的区别、联系）
+  - 基本语法
+    -  使用 await ，函数必须用 async 标识
+    -  await 后面跟的是一个 Promise 实例
+    -  需要 babel-polyfill
+  - 使用了 Promise ，并没有和 Promise 冲突
+  - 完全是同步的写法，再也没有回调函数
+  - 但是：改变不了 JS 单线程、异步的本质
+
+6.  总结一下当前 JS 解决异步的方案
+  -  jQuery Deferred
+  -  Promise
+  -  Async/Await
+  -  Generator（解释不讲的原因）
+    - 原理比较复杂
+    - 不是异步的直接替代方式
+    - 有更好更简洁的解决方案 async/await
+    - koa 也早已“弃暗投明”
+
+
