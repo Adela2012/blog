@@ -178,19 +178,19 @@ $.fn.getNodeName = function(){
   })
   ```
   - Promise 标准 - 状态变化，then 函数
-    - 三种状态： pending fulfilled rejected。
-    - 初始状态是pending。
-    - pending 变成 fulfilled, 或者 pending 变成 rejected。
-    - 状态变化不可逆。
+      - 三种状态： pending fulfilled rejected。
+      - 初始状态是pending。
+      - pending 变成 fulfilled, 或者 pending 变成 rejected。
+      - 状态变化不可逆。
 
-    - Promise 实例必须实现 then 方法
-    - then() 可以接收两个函数作为参数
-    - then() 返回的必须是一个Promise实例
+      - Promise 实例必须实现 then 方法
+      - then() 可以接收两个函数作为参数
+      - then() 返回的必须是一个Promise实例
 5.  介绍一下 async/await（和 Promise 的区别、联系）
   - 基本语法
-    -  使用 await ，函数必须用 async 标识
-    -  await 后面跟的是一个 Promise 实例
-    -  需要 babel-polyfill
+      -  使用 await ，函数必须用 async 标识
+      -  await 后面跟的是一个 Promise 实例
+      -  需要 babel-polyfill
   - 使用了 Promise ，并没有和 Promise 冲突
   - 完全是同步的写法，再也没有回调函数
   - 但是：改变不了 JS 单线程、异步的本质
@@ -200,9 +200,93 @@ $.fn.getNodeName = function(){
   -  Promise
   -  Async/Await
   -  Generator（解释不讲的原因）
-    - 原理比较复杂
-    - 不是异步的直接替代方式
-    - 有更好更简洁的解决方案 async/await
-    - koa 也早已“弃暗投明”
+      - 原理比较复杂
+      - 不是异步的直接替代方式
+      - 有更好更简洁的解决方案 async/await
+      - koa 也早已“弃暗投明”
+
+
+## 虚拟DOM
+1. vdom 是什么？为何会存在 vdom？
+  -  virtual dom ，`虚拟 DOM`
+  -  `用 JS 模拟 DOM 结构`
+  -  `DOM 操作非常“昂贵”`
+  -  `将 DOM 对比操作放在 JS 层，提高效率`
+  ```html 
+  <ul id="list">
+    <li class="item">Item 1</li>
+  </ul>
+  ```
+  ```javascript
+  var vdom = {
+    tag: 'ul',
+    attrs: {
+      id: 'list'
+    },
+    children: [{
+      tag: 'li',
+      attrs: {
+        className: 'item',
+        children: ['Item 1']
+      }
+    }]
+  }
+  ```   
+2. vdom 的如何应用，核心 API 是什么
+  - 可用 snabbdom 的用法来举例
+  -  核心 API：h 函数、patch 函数
+      -  h(‘<标签名>’, {…属性…}, […子元素…])
+      -  h(‘<标签名>’, {…属性…}, ‘….’)
+      -  patch(container, vnode) 
+      -  patch(vnode, newVnode) 
+3. 介绍一下 diff 算法
+  -  什么是 diff 算法，是 `linux 的基础命令`
+  -  vdom 为何用 diff 算法
+      -  DOM 操作是“昂贵”的，因此尽量减少 DOM 操作
+      -  `找出本次 DOM 必须更新的节点来更新`，其他的不更新
+      -  这个“找出”的过程，就需要 diff 算法
+  -  diff 算法的实现流程
+      - `patch(container, vnode)` 
+        ```javascript
+        function createElement(vnode){
+          let tag = vnode.tag
+          let attrs = vnode.attrs || {}
+          let children = vnode.children || {}
+          if (!tag) return null
+          // 创建元素
+          let elem = document.createElement(tag)
+          // 创建属性
+          for (let attrName in attrs) {
+            if (attrs.hasOwnPropery(attrName)) {
+              elem.setAttribute(attrName, attrs[attrName])
+            }
+          }
+          // 创建子元素
+          children.forEach(childVnode => {
+            elem.appendChild(createElement(childVnode))
+          })
+          return elem
+        }
+        ```
+      
+      - `patch(vnode, newVnode)` 
+        ```javascript
+        function updateChildren(vnode, newVnode) {
+          let children =vnode.children
+          let newChildren = newVnode.children
+
+          children.forEach((child, index) => {
+            let newChild = newChildren[index]
+            if(newChild == null) return
+            if (child.tag == newChild.tag) {
+              updateChildren(child, newChild)
+            } else {
+              replaceNode(child, newChild)
+            }
+          })
+        }
+        ```
+      -  节点新增和删除，节点重新排序， 节点属性、样式、事件变化， 如何极致压榨性能， ……
+
 
 
