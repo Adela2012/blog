@@ -290,3 +290,105 @@ $.fn.getNodeName = function(){
 
 
 
+
+## MVVM和VUE
+1. 说一下使用 jQuery 和使用框架的区别
+  -  数据和视图的分离，解耦（开放封闭原则）
+  -  以数据驱动视图，只关心数据变化，DOM 操作被封装
+  -  前端组件化（后面还有组件化的课程）
+2. 说一下对 MVVM 的理解
+  -  Model - 模型、数据
+  -  View - 视图、模板（视图和模型是分离的）
+  -  ViewModel - 连接 Model 和 View （view -> DOM listeners -> Model, Model -> Data Bindings -> View）- View 可以通过事件绑定的方式影响到 Model, Model 可以通过数据绑定的方式影响到 View
+  - 三要素
+      -  响应式：vue 如何监听到 data 的每个属性变化？
+      -  模板引擎：vue 的模板如何被解析，指令如何处理？
+      -  渲染：vue 的模板如何被渲染成 html ？以及渲染过程
+3. vue 中如何实现响应式
+  -  修改 data 属性之后，vue 立刻监听到
+  -  data 属性被代理到 vm 上
+```javascript
+var mv = {}
+var data = {
+  price: 100,
+  name: 'adela'
+}
+for (let key in data) {
+  // 命中闭包。保证key的独立的作用域
+  (function(key){
+    Object.defineProperty(vm, key, {
+      get() {
+        return data[key]
+      },
+      set(newValue) {
+        data[key] = newValue
+      }
+    })
+  })(key)
+}
+```
+4. vue 中如何解析模板
+  -  模板是什么
+      -  本质：字符串
+      -  有逻辑，如 v-if v-for 等
+      -  与 html 格式很像，但有很大区别
+      -  模板最终要转换成一个 JS 函数（render 函数）
+  -  render 函数
+      -  模板中所有信息都包含在了 render 函数中，执行是返回 vnode
+      -  this 即 vm
+      -  price 即 this.price 即 vm.price，即 data 中的 price
+      -  _c 即 this._c 即 vm._c
+  ```html
+  <div id="app">
+    <p>{{price}}</p>
+  </div>
+  ```
+  ```javascript
+  function render () {
+    with(this) {
+      return _c( // createElement
+        'div', 
+        {
+          attrs: {"id": "app"}
+        },
+        [
+          _c('p', [_v(_s(price))]) // _v createTextVNode, _s toString
+        ]
+      )
+    }
+  }
+  ```
+  -  render 函数与 vdom
+      - updateComponent 中实现了 vdom 的 patch
+      -  页面首次渲染执行 updateComponent
+      -  data 中每次修改属性，执行 updateComponent
+5. vue 的整个实现流程
+  -  第一步：解析模板成 render 函数
+      -  with 的用法
+      -  模板中的所有信息都被 render 函数包含
+      -  模板中用到的 data 中的属性，都变成了 JS 变量
+      -  模板中的 v-model  v-for  v-on 都变成了 JS 逻辑
+      -  render 函数返回 vnode
+  -  第二步：响应式开始监听
+      -  Object.defineProperty
+      -  将 data 的属性代理到 vm 上
+  -  第三步：首次渲染，显示页面，且绑定依赖
+      -  初次渲染，执行 updateComponent，执行 vm._render()
+      -  执行 render 函数，会访问到 vm.list vm.title
+      -  会被响应式的 get 方法监听到（后面详细讲）
+      -  执行 updateComponent ，会走到 vdom 的 patch 方法
+      -  patch 将 vnode 渲染成 DOM ，初次渲染完成
+  -  第四步：data 属性变化，触发 rerender
+      -  修改属性，被响应式的 set 监听到
+      -  set 中执行 updateComponent
+      -  updateComponent 重新执行 vm._render()
+      -  生成的 vnode 和 prevVnode ，通过 patch 进行对比
+      -  渲染到 html 中
+
+  -  为何要监听 get ，直接监听 set 不行吗？
+      -  data 中有很多属性，有些被用到，有些可能不被用到
+      -  被用到的会走到 get ，不被用到的不会走到 get
+      -  未走到 get 中的属性，set 的时候我们也无需关心
+      -  避免不必要的重复渲染
+
+
