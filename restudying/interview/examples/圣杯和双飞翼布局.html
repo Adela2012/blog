@@ -1,0 +1,132 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta http-equiv="X-UA-Compatible" content="ie=edge">
+  <title>圣杯和双飞翼布局</title>
+  <style>
+      body{
+        min-width: 550px;
+        text-align: center;
+      }
+      *{
+        margin: 0;
+        padding: 0;
+      }
+      .header, .footer{
+        height: 50px;
+        line-height: 50px;;
+        background: #eee;
+      }
+      .footer{
+        clear: both;
+      }
+      .container {
+            background: rgb(37, 212, 225);
+      }
+      .center{
+            background: rgb(228, 202, 58);
+      }
+      .left{
+        background: rgb(127, 199, 228);
+      }
+      .right{
+        background: rgb(249, 94, 94);
+      }
+  </style>
+</head>
+<body>
+  <h1>圣杯布局</h1>
+  <section class="shengbei">
+      <style>
+          .shengbei .container {
+            padding-left:  150px;
+            padding-right:  200px;
+      
+          }
+          .shengbei  .center{
+            float: left;
+            width: 100%;
+          }
+          .shengbei  .left {
+            float: left;
+            width: 150px;
+            margin-left: -100%;
+            right: 150px; 
+            position: relative;
+      
+          }
+          .shengbei  .right {
+            float: left;
+            width: 200px;
+            margin-right: -100%;
+          }
+      </style>
+      <div class="header">header</div>
+      <div class="container">
+        <div class="center">center</div>
+        <div class="left">left</div>
+        <div class="right">right</div>
+      </div>
+      <div class="footer">footer</div>
+  </section>
+  <h1>双飞翼布局</h1>
+  <section class="shuangfeiyi">
+      <style>
+          .shuangfeiyi .container {
+            width: 100%;
+            float: left;
+          }
+          .shuangfeiyi  .center{
+            margin-left: 150px;
+            margin-right: 200px;
+          }
+          .shuangfeiyi  .left {
+            float: left;
+            width: 150px;
+            margin-left: -100%;
+      
+          }
+          .shuangfeiyi  .right {
+            float: left;
+            width: 200px;
+            margin-left: -200px;
+          }
+      </style>
+      <div class="header">header</div>
+      <div class="container">
+        <div class="center">center</div>
+      </div>
+      <div class="left">left</div>
+      <div class="right">right</div>
+      <div class="footer">footer</div>
+  </section>
+
+  <h1>flex布局</h1>
+  <section class="flex">
+      <style>
+          .flex .container {
+            display: flex;
+          }
+          .flex  .center{
+            flex: 1;
+          }
+          .flex  .left {
+            order: -1;
+            flex: 0 0 150px;
+          }
+          .flex  .right {
+            flex: 0 0 200px;
+          }
+      </style>
+      <div class="header">header</div>
+      <div class="container">
+        <div class="center">center</div>
+        <div class="left">left</div>
+        <div class="right">right</div>
+      </div>
+      <div class="footer">footer</div>
+  </section>
+</body>
+</html>
