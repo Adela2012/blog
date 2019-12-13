@@ -18,10 +18,10 @@
 1. [leetcode解题](https://github.com/Adela2012/leetcode)
 
 ## 2019
-1. [Vue 源码解析](https://github.com/Adela2012/blog/tree/master/restudying/vue)
+1. [输入URL到页面渲染]()
+1. [Vue2.0 源码解析](https://github.com/Adela2012/blog/tree/master/restudying/vue)
 1. [案例：使用 typescript 实现 axios](https://github.com/Adela2012/ts-axios)
 1. [案例：node和vue实现SSR-TODO应用](https://github.com/Adela2012/todo-ssr)
-1. [大华面试](https://github.com/Adela2012/blog/blob/master/restudying/interview/%E5%A4%A7%E5%8D%8E%E9%9D%A2%E8%AF%95.md)
 1. [原型/异步/虚拟DOM/MVVM Vue](https://github.com/Adela2012/blog/tree/master/restudying/js)
 1. [npm install ，发生报错](https://github.com/Adela2012/blog/blob/master/articles/errorCorrection/npm%20install%20%E5%87%BA%E9%94%99.md)
 1. [npm run dev，发生报错`Unhandled 'error' event`](https://github.com/Adela2012/blog/blob/master/articles/errorCorrection/npm%20run%20error.md)
