@@ -16,7 +16,26 @@
 
 ## 持续更新
 1. [纠错集](https://github.com/Adela2012/blog/blob/master/articles/%E7%BA%A0%E9%94%99%E9%9B%86.md)
+    - 在 npm install ，发生报错`npm ERR! Error: EACCES: permission denied, mkdir '/Users/...'`
+    - npm run dev，发生报错`Unhandled 'error' event`
+    - 小程序跳H5token问题
+    - 微信端autofocus虚拟键盘弹出拉高页面
+    - localhost，127.0.0.1 和 本机IP 三者的区别
+    - 接口404解决方案
+    - npm本地安装后，启动报错。`Module build failed: Error: Couldn't find preset "react" relative to directory "user/adela"`
+    - npm(淘宝依赖)、npm(原生翻墙)、cnpm、yarn
+    - window.location.href无效，页面不跳转
+    - 下拉加载在手机上滑动有阻塞感
+    - 手机兼容性问题：页面空白问题
+    - 手机自动识别手机的功能关闭
+    - CSS中使用了VH，iOS中正常，安卓的个别浏览器中，当输入框弹出时，使用VH的DIV的高度会发生变化
+    - 微信小程序中打开H5页面，出现反复跳登录页情况
+    - 小程序组件传值，子组件可能获取不到的原因
+    - token问题
 1. [摘录集](https://github.com/Adela2012/blog/blob/master/articles/%E6%91%98%E5%BD%95%E9%9B%86.md)
+    - cookie
+    - git 中 A C D M R T U X 分别解释
+    - call、apply和bind函数
 1. [leetcode解题](https://github.com/Adela2012/leetcode)
 
 ## 2019
