@@ -15,10 +15,6 @@
 - restudying 温故知新
 
 ## 持续更新
-1. [摘录集](https://github.com/Adela2012/blog/blob/master/articles/%E6%91%98%E5%BD%95%E9%9B%86.md)
-    - cookie
-    - git 中 A C D M R T U X 分别解释
-    - call、apply和bind函数
 1. [leetcode解题](https://github.com/Adela2012/leetcode)
 
 ## 2019
@@ -43,6 +39,10 @@
 1. [微信小程序中打开H5页面，出现反复跳登录页情况](https://github.com/Adela2012/blog/blob/master/articles/errorCorrection/%E5%BE%AE%E4%BF%A1%E5%B0%8F%E7%A8%8B%E5%BA%8F%E4%B8%AD%E6%89%93%E5%BC%80H5%E9%A1%B5%E9%9D%A2%EF%BC%8C%E5%87%BA%E7%8E%B0%E5%8F%8D%E5%A4%8D%E8%B7%B3%E7%99%BB%E5%BD%95%E9%A1%B5%E6%83%85%E5%86%B5.md)
 1. [小程序组件传值，子组件可能获取不到的原因](https://github.com/Adela2012/blog/blob/master/articles/errorCorrection/%E5%B0%8F%E7%A8%8B%E5%BA%8F%E7%BB%84%E4%BB%B6%E4%BC%A0%E5%80%BC.md)
 1. [token问题](https://github.com/Adela2012/blog/blob/master/articles/errorCorrection/token%E9%97%AE%E9%A2%98.md)
+1. [call、apply和bind函数](https://github.com/Adela2012/blog/blob/master/articles/errorCorrection/call%E3%80%81apply%E5%92%8Cbind%E5%87%BD%E6%95%B0.md)
+1. [git 中 A C D M R T U X 分别解释](https://github.com/Adela2012/blog/blob/master/articles/errorCorrection/git%20%E4%B8%AD%20A%20C%20D%20M%20R%20T%20U%20X%20%E5%88%86%E5%88%AB%E8%A7%A3%E9%87%8A.md)
+1. [语义化版本](https://github.com/Adela2012/blog/blob/master/articles/errorCorrection/%E8%AF%AD%E4%B9%89%E5%8C%96%E7%89%88%E6%9C%AC.md)
+
 
 ## 2018
 1. [【小程序】前言](https://github.com/Adela2012/gitbook/blob/master/README.md)
