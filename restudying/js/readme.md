@@ -302,7 +302,7 @@ $.fn.getNodeName = function(){
   -  ViewModel - 连接 Model 和 View （view -> DOM listeners -> Model, Model -> Data Bindings -> View）- View 可以通过事件绑定的方式影响到 Model, Model 可以通过数据绑定的方式影响到 View
   - 三要素
       -  响应式：vue 如何监听到 data 的每个属性变化？
-      -  模板引擎：vue 的模板如何被解析，指令如何处理？
+      -  模板解析：vue 的模板如何被解析，指令如何处理？
       -  渲染：vue 的模板如何被渲染成 html ？以及渲染过程
 3. vue 中如何实现响应式
   -  修改 data 属性之后，vue 立刻监听到
@@ -391,4 +391,13 @@ for (let key in data) {
       -  未走到 get 中的属性，set 的时候我们也无需关心
       -  避免不必要的重复渲染
 
+
+
+
+## 组件化和React
+- 组件化理解
+- JSX本质
+- JSX和vdom的关系
+- setState的过程
+-  阐述自己对 React 和 vue 的认识
 
