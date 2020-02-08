@@ -1,7 +1,11 @@
 ## 2020年
-日常练习
+日常练习，每周六一个话题。
 
-1. 2020-01-11 work Experience Progamme
+1. [2020-02-08](https://github.com/Adela2012/blog/blob/master/bec/speaking/collaboration/02-08.md)
+1. [2020-02-01](https://github.com/Adela2012/blog/blob/master/bec/speaking/collaboration/02.01.md)
+1. [2020-01-25 recruiting & selecting](https://github.com/Adela2012/blog/blob/master/bec/speaking/collaboration/01.25.md)
+1. [2020-01-18 Teamwork & Internal Communication](https://github.com/Adela2012/blog/blob/master/bec/speaking/collaboration/01-18.md)
+1. [2020-01-11 work Experience Progamme](https://github.com/Adela2012/blog/blob/master/bec/speaking/collaboration/01-11.Work%20Experience%20Programme.md)
 
 
 ## 2019年
@@ -45,7 +49,7 @@
 11月03日-11月12日 共10天，练习10个常考话题，1天一个话题。
 11月13日-11月20日 共8天，练习8个真题话题，1天一个话题。
 11月21日-11月22日 共2天，为按照考试流程真题演练。
-11月23日-11月19日 共7天，暂定各自复习。
+11月23日-11月29日 共7天，暂定各自复习。
 ```
 
 
