@@ -16,6 +16,14 @@
 
 ## 持续更新
 1. [leetcode解题](https://github.com/Adela2012/leetcode)
+1. [BEC英语对话](https://github.com/Adela2012/blog/tree/master/bec/speaking)
+
+
+## 2020
+1. [20200219小程序代码上传失败](https://github.com/Adela2012/blog/blob/master/articles/errorCorrection/20200219%E6%B7%98%E5%AE%9D%E5%B0%8F%E7%A8%8B%E5%BA%8F%E4%B8%8A%E4%BC%A0%E5%A4%B1%E8%B4%A5.md)
+1. [20200218小程序PC蒙层禁止滑动](https://github.com/Adela2012/blog/blob/master/articles/errorCorrection/20200218%E5%B0%8F%E7%A8%8B%E5%BA%8FPC%E8%92%99%E5%B1%82%E7%A6%81%E6%AD%A2%E6%BB%91%E5%8A%A8.md)
+
+
 
 ## 2019
 1. [webpack核心概念、写loader、写plugin](https://github.com/Adela2012/blog/blob/master/webpack/README.md)
